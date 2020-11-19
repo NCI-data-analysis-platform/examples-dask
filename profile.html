@@ -1,0 +1,554 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>Bokeh Plot</title>
+      
+      
+        
+          
+        <style>
+            table.panel-df {
+                    margin-left: auto;
+                    margin-right: auto;
+                    border: none;
+                    border-collapse: collapse;
+                    border-spacing: 0;
+                    color: black;
+                    font-size: 12px;
+                    table-layout: fixed;
+                    width: 100%;
+                }
+
+                .panel-df tr, .panel-df th, .panel-df td {
+                    text-align: right;
+                    vertical-align: middle;
+                    padding: 0.5em 0.5em !important;
+                    line-height: normal;
+                    white-space: normal;
+                    max-width: none;
+                    border: none;
+                }
+
+                .panel-df tbody {
+                    display: table-row-group;
+                    vertical-align: middle;
+                    border-color: inherit;
+                }
+
+                .panel-df tbody tr:nth-child(odd) {
+                    background: #f5f5f5;
+                }
+
+                .panel-df thead {
+                    border-bottom: 1px solid black;
+                    vertical-align: bottom;
+                }
+
+                .panel-df tr:hover {
+                    background: lightblue !important;
+                    cursor: pointer;
+                }
+
+        </style>
+        <style>
+            .panel-widget-box {
+                	min-height: 20px;
+                	background-color: #f5f5f5;
+                	border: 1px solid #e3e3e3 !important;
+                	border-radius: 4px;
+                	-webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+                	box-shadow: inset 0 1px 1px rgba(0,0,0,.05);
+                	overflow-x: hidden;
+                	overflow-y: hidden;
+                }
+
+                .scrollable {
+                  overflow: scroll;
+                }
+
+                progress {
+                	appearance: none;
+                	-moz-appearance: none;
+                	-webkit-appearance: none;
+
+                	border: none;
+                	height: 20px;
+                	background-color: whiteSmoke;
+                	border-radius: 3px;
+                	box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+                	color: royalblue;
+                	position: relative;
+                	margin: 0 0 1.5em;
+                }
+
+                progress[value]::-webkit-progress-bar {
+                	background-color: whiteSmoke;
+                	border-radius: 3px;
+                	box-shadow: 0 2px 3px rgba(0,0,0,.5) inset;
+                }
+
+                progress[value]::-webkit-progress-value {
+                	position: relative;
+
+                	background-size: 35px 20px, 100% 100%, 100% 100%;
+                	border-radius:3px;
+                }
+
+                progress.active:not([value])::before {
+                	background-position: 10%;
+                	animation-name: stripes;
+                	animation-duration: 3s;
+                	animation-timing-function: linear;
+                	animation-iteration-count: infinite;
+                }
+
+                progress[value]::-moz-progress-bar {
+                	background-size: 35px 20px, 100% 100%, 100% 100%;
+                	border-radius:3px;
+                }
+
+                progress:not([value])::-moz-progress-bar {
+                	border-radius:3px;
+                	background:
+                	linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.2) 33%, rgba(0, 0, 0, 0.2) 66%, transparent 66%) left/2.5em 1.5em;
+
+                }
+
+                progress.active:not([value])::-moz-progress-bar {
+                	background-position: 10%;
+                	animation-name: stripes;
+                	animation-duration: 3s;
+                	animation-timing-function: linear;
+                	animation-iteration-count: infinite;
+                }
+
+                progress.active:not([value])::-webkit-progress-bar {
+                	background-position: 10%;
+                	animation-name: stripes;
+                	animation-duration: 3s;
+                	animation-timing-function: linear;
+                	animation-iteration-count: infinite;
+                }
+
+                progress.primary[value]::-webkit-progress-value { background-color: #007bff; }
+                progress.primary:not([value])::before { background-color: #007bff; }
+                progress.primary:not([value])::-webkit-progress-bar { background-color: #007bff; }
+                progress.primary::-moz-progress-bar { background-color: #007bff; }
+
+                progress.secondary[value]::-webkit-progress-value { background-color: #6c757d; }
+                progress.secondary:not([value])::before { background-color: #6c757d; }
+                progress.secondary:not([value])::-webkit-progress-bar { background-color: #6c757d; }
+                progress.secondary::-moz-progress-bar { background-color: #6c757d; }
+
+                progress.success[value]::-webkit-progress-value { background-color: #28a745; }
+                progress.success:not([value])::before { background-color: #28a745; }
+                progress.success:not([value])::-webkit-progress-bar { background-color: #28a745; }
+                progress.success::-moz-progress-bar { background-color: #28a745; }
+
+                progress.danger[value]::-webkit-progress-value { background-color: #dc3545; }
+                progress.danger:not([value])::before { background-color: #dc3545; }
+                progress.danger:not([value])::-webkit-progress-bar { background-color: #dc3545; }
+                progress.danger::-moz-progress-bar { background-color: #dc3545; }
+
+                progress.warning[value]::-webkit-progress-value { background-color: #ffc107; }
+                progress.warning:not([value])::before { background-color: #ffc107; }
+                progress.warning:not([value])::-webkit-progress-bar { background-color: #ffc107; }
+                progress.warning::-moz-progress-bar { background-color: #ffc107; }
+
+                progress.info[value]::-webkit-progress-value { background-color: #17a2b8; }
+                progress.info:not([value])::before { background-color: #17a2b8; }
+                progress.info:not([value])::-webkit-progress-bar { background-color: #17a2b8; }
+                progress.info::-moz-progress-bar { background-color: #17a2b8; }
+
+                progress.light[value]::-webkit-progress-value { background-color: #f8f9fa; }
+                progress.light:not([value])::before { background-color: #f8f9fa; }
+                progress.light:not([value])::-webkit-progress-bar { background-color: #f8f9fa; }
+                progress.light::-moz-progress-bar { background-color: #f8f9fa; }
+
+                progress.dark[value]::-webkit-progress-value { background-color: #343a40; }
+                progress.dark:not([value])::-webkit-progress-bar { background-color: #343a40; }
+                progress.dark:not([value])::before { background-color: #343a40; }
+                progress.dark::-moz-progress-bar { background-color: #343a40; }
+
+                progress:not([value])::-webkit-progress-bar {
+                	border-radius: 3px;
+                	background:
+                	linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.2) 33%, rgba(0, 0, 0, 0.2) 66%, transparent 66%) left/2.5em 1.5em;
+                }
+                progress:not([value])::before {
+                	content:" ";
+                	position:absolute;
+                	height: 20px;
+                	top:0;
+                	left:0;
+                	right:0;
+                	bottom:0;
+                	border-radius: 3px;
+                	background:
+                	linear-gradient(-45deg, transparent 33%, rgba(0, 0, 0, 0.2) 33%, rgba(0, 0, 0, 0.2) 66%, transparent 66%) left/2.5em 1.5em;
+                }
+
+                @keyframes stripes {
+                  from {background-position: 0%}
+                  to {background-position: 100%}
+                }
+
+        </style>
+        <style>
+            .json-formatter-row {
+                  font-family: monospace;
+                }
+                .json-formatter-row,
+                .json-formatter-row a,
+                .json-formatter-row a:hover {
+                  color: black;
+                  text-decoration: none;
+                }
+                .json-formatter-row .json-formatter-row {
+                  margin-left: 1rem;
+                }
+                .json-formatter-row .json-formatter-children.json-formatter-empty {
+                  opacity: 0.5;
+                  margin-left: 1rem;
+                }
+                .json-formatter-row .json-formatter-children.json-formatter-empty:after {
+                  display: none;
+                }
+                .json-formatter-row .json-formatter-children.json-formatter-empty.json-formatter-object:after {
+                  content: "No properties";
+                }
+                .json-formatter-row .json-formatter-children.json-formatter-empty.json-formatter-array:after {
+                  content: "[]";
+                }
+                .json-formatter-row .json-formatter-string,
+                .json-formatter-row .json-formatter-stringifiable {
+                  color: green;
+                  white-space: pre;
+                  word-wrap: break-word;
+                }
+                .json-formatter-row .json-formatter-number {
+                  color: blue;
+                }
+                .json-formatter-row .json-formatter-boolean {
+                  color: red;
+                }
+                .json-formatter-row .json-formatter-null {
+                  color: #855A00;
+                }
+                .json-formatter-row .json-formatter-undefined {
+                  color: #ca0b69;
+                }
+                .json-formatter-row .json-formatter-function {
+                  color: #FF20ED;
+                }
+                .json-formatter-row .json-formatter-date {
+                  background-color: rgba(0, 0, 0, 0.05);
+                }
+                .json-formatter-row .json-formatter-url {
+                  text-decoration: underline;
+                  color: blue;
+                  cursor: pointer;
+                }
+                .json-formatter-row .json-formatter-bracket {
+                  color: blue;
+                }
+                .json-formatter-row .json-formatter-key {
+                  color: #00008B;
+                  padding-right: 0.2rem;
+                }
+                .json-formatter-row .json-formatter-toggler-link {
+                  cursor: pointer;
+                }
+                .json-formatter-row .json-formatter-toggler {
+                  line-height: 1.2rem;
+                  font-size: 0.7rem;
+                  vertical-align: middle;
+                  opacity: 0.6;
+                  cursor: pointer;
+                  padding-right: 0.2rem;
+                }
+                .json-formatter-row .json-formatter-toggler:after {
+                  display: inline-block;
+                  transition: transform 100ms ease-in;
+                  content: "\25BA";
+                }
+                .json-formatter-row > a > .json-formatter-preview-text {
+                  opacity: 0;
+                  transition: opacity 0.15s ease-in;
+                  font-style: italic;
+                }
+                .json-formatter-row:hover > a > .json-formatter-preview-text {
+                  opacity: 0.6;
+                }
+                .json-formatter-row.json-formatter-open > .json-formatter-toggler-link .json-formatter-toggler:after {
+                  transform: rotate(90deg);
+                }
+                .json-formatter-row.json-formatter-open > .json-formatter-children:after {
+                  display: inline-block;
+                }
+                .json-formatter-row.json-formatter-open > a > .json-formatter-preview-text {
+                  display: none;
+                }
+                .json-formatter-row.json-formatter-open.json-formatter-empty:after {
+                  display: block;
+                }
+                .json-formatter-dark.json-formatter-row {
+                  font-family: monospace;
+                }
+                .json-formatter-dark.json-formatter-row,
+                .json-formatter-dark.json-formatter-row a,
+                .json-formatter-dark.json-formatter-row a:hover {
+                  color: white;
+                  text-decoration: none;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-row {
+                  margin-left: 1rem;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-children.json-formatter-empty {
+                  opacity: 0.5;
+                  margin-left: 1rem;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-children.json-formatter-empty:after {
+                  display: none;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-children.json-formatter-empty.json-formatter-object:after {
+                  content: "No properties";
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-children.json-formatter-empty.json-formatter-array:after {
+                  content: "[]";
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-string,
+                .json-formatter-dark.json-formatter-row .json-formatter-stringifiable {
+                  color: #31F031;
+                  white-space: pre;
+                  word-wrap: break-word;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-number {
+                  color: #66C2FF;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-boolean {
+                  color: #EC4242;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-null {
+                  color: #EEC97D;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-undefined {
+                  color: #ef8fbe;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-function {
+                  color: #FD48CB;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-date {
+                  background-color: rgba(255, 255, 255, 0.05);
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-url {
+                  text-decoration: underline;
+                  color: #027BFF;
+                  cursor: pointer;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-bracket {
+                  color: #9494FF;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-key {
+                  color: #23A0DB;
+                  padding-right: 0.2rem;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-toggler-link {
+                  cursor: pointer;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-toggler {
+                  line-height: 1.2rem;
+                  font-size: 0.7rem;
+                  vertical-align: middle;
+                  opacity: 0.6;
+                  cursor: pointer;
+                  padding-right: 0.2rem;
+                }
+                .json-formatter-dark.json-formatter-row .json-formatter-toggler:after {
+                  display: inline-block;
+                  transition: transform 100ms ease-in;
+                  content: "\25BA";
+                }
+                .json-formatter-dark.json-formatter-row > a > .json-formatter-preview-text {
+                  opacity: 0;
+                  transition: opacity 0.15s ease-in;
+                  font-style: italic;
+                }
+                .json-formatter-dark.json-formatter-row:hover > a > .json-formatter-preview-text {
+                  opacity: 0.6;
+                }
+                .json-formatter-dark.json-formatter-row.json-formatter-open > .json-formatter-toggler-link .json-formatter-toggler:after {
+                  transform: rotate(90deg);
+                }
+                .json-formatter-dark.json-formatter-row.json-formatter-open > .json-formatter-children:after {
+                  display: inline-block;
+                }
+                .json-formatter-dark.json-formatter-row.json-formatter-open > a > .json-formatter-preview-text {
+                  display: none;
+                }
+                .json-formatter-dark.json-formatter-row.json-formatter-open.json-formatter-empty:after {
+                  display: block;
+                }
+
+        </style>
+        <style>
+            .codehilite .hll { background-color: #ffffcc }
+                .codehilite  { background: #f8f8f8; }
+                .codehilite .c { color: #408080; font-style: italic } /* Comment */
+                .codehilite .err { border: 1px solid #FF0000 } /* Error */
+                .codehilite .k { color: #008000; font-weight: bold } /* Keyword */
+                .codehilite .o { color: #666666 } /* Operator */
+                .codehilite .ch { color: #408080; font-style: italic } /* Comment.Hashbang */
+                .codehilite .cm { color: #408080; font-style: italic } /* Comment.Multiline */
+                .codehilite .cp { color: #BC7A00 } /* Comment.Preproc */
+                .codehilite .cpf { color: #408080; font-style: italic } /* Comment.PreprocFile */
+                .codehilite .c1 { color: #408080; font-style: italic } /* Comment.Single */
+                .codehilite .cs { color: #408080; font-style: italic } /* Comment.Special */
+                .codehilite .gd { color: #A00000 } /* Generic.Deleted */
+                .codehilite .ge { font-style: italic } /* Generic.Emph */
+                .codehilite .gr { color: #FF0000 } /* Generic.Error */
+                .codehilite .gh { color: #000080; font-weight: bold } /* Generic.Heading */
+                .codehilite .gi { color: #00A000 } /* Generic.Inserted */
+                .codehilite .go { color: #888888 } /* Generic.Output */
+                .codehilite .gp { color: #000080; font-weight: bold } /* Generic.Prompt */
+                .codehilite .gs { font-weight: bold } /* Generic.Strong */
+                .codehilite .gu { color: #800080; font-weight: bold } /* Generic.Subheading */
+                .codehilite .gt { color: #0044DD } /* Generic.Traceback */
+                .codehilite .kc { color: #008000; font-weight: bold } /* Keyword.Constant */
+                .codehilite .kd { color: #008000; font-weight: bold } /* Keyword.Declaration */
+                .codehilite .kn { color: #008000; font-weight: bold } /* Keyword.Namespace */
+                .codehilite .kp { color: #008000 } /* Keyword.Pseudo */
+                .codehilite .kr { color: #008000; font-weight: bold } /* Keyword.Reserved */
+                .codehilite .kt { color: #B00040 } /* Keyword.Type */
+                .codehilite .m { color: #666666 } /* Literal.Number */
+                .codehilite .s { color: #BA2121 } /* Literal.String */
+                .codehilite .na { color: #7D9029 } /* Name.Attribute */
+                .codehilite .nb { color: #008000 } /* Name.Builtin */
+                .codehilite .nc { color: #0000FF; font-weight: bold } /* Name.Class */
+                .codehilite .no { color: #880000 } /* Name.Constant */
+                .codehilite .nd { color: #AA22FF } /* Name.Decorator */
+                .codehilite .ni { color: #999999; font-weight: bold } /* Name.Entity */
+                .codehilite .ne { color: #D2413A; font-weight: bold } /* Name.Exception */
+                .codehilite .nf { color: #0000FF } /* Name.Function */
+                .codehilite .nl { color: #A0A000 } /* Name.Label */
+                .codehilite .nn { color: #0000FF; font-weight: bold } /* Name.Namespace */
+                .codehilite .nt { color: #008000; font-weight: bold } /* Name.Tag */
+                .codehilite .nv { color: #19177C } /* Name.Variable */
+                .codehilite .ow { color: #AA22FF; font-weight: bold } /* Operator.Word */
+                .codehilite .w { color: #bbbbbb } /* Text.Whitespace */
+                .codehilite .mb { color: #666666 } /* Literal.Number.Bin */
+                .codehilite .mf { color: #666666 } /* Literal.Number.Float */
+                .codehilite .mh { color: #666666 } /* Literal.Number.Hex */
+                .codehilite .mi { color: #666666 } /* Literal.Number.Integer */
+                .codehilite .mo { color: #666666 } /* Literal.Number.Oct */
+                .codehilite .sa { color: #BA2121 } /* Literal.String.Affix */
+                .codehilite .sb { color: #BA2121 } /* Literal.String.Backtick */
+                .codehilite .sc { color: #BA2121 } /* Literal.String.Char */
+                .codehilite .dl { color: #BA2121 } /* Literal.String.Delimiter */
+                .codehilite .sd { color: #BA2121; font-style: italic } /* Literal.String.Doc */
+                .codehilite .s2 { color: #BA2121 } /* Literal.String.Double */
+                .codehilite .se { color: #BB6622; font-weight: bold } /* Literal.String.Escape */
+                .codehilite .sh { color: #BA2121 } /* Literal.String.Heredoc */
+                .codehilite .si { color: #BB6688; font-weight: bold } /* Literal.String.Interpol */
+                .codehilite .sx { color: #008000 } /* Literal.String.Other */
+                .codehilite .sr { color: #BB6688 } /* Literal.String.Regex */
+                .codehilite .s1 { color: #BA2121 } /* Literal.String.Single */
+                .codehilite .ss { color: #19177C } /* Literal.String.Symbol */
+                .codehilite .bp { color: #008000 } /* Name.Builtin.Pseudo */
+                .codehilite .fm { color: #0000FF } /* Name.Function.Magic */
+                .codehilite .vc { color: #19177C } /* Name.Variable.Class */
+                .codehilite .vg { color: #19177C } /* Name.Variable.Global */
+                .codehilite .vi { color: #19177C } /* Name.Variable.Instance */
+                .codehilite .vm { color: #19177C } /* Name.Variable.Magic */
+                .codehilite .il { color: #666666 } /* Literal.Number.Integer.Long */
+
+                .markdown h1 { margin-block-start: 0.34em }
+                .markdown h2 { margin-block-start: 0.42em }
+                .markdown h3 { margin-block-start: 0.5em }
+                .markdown h4 { margin-block-start: 0.67em }
+                .markdown h5 { margin-block-start: 0.84em }
+                .markdown h6 { margin-block-start: 1.17em }
+                .markdown ul { padding-inline-start: 2em }
+                .markdown ol { padding-inline-start: 2em }
+                .markdown strong { font-weight: 600 }
+                .markdown a { color: -webkit-link }
+                .markdown a { color: -moz-hyperlinkText }
+
+        </style>
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.0.2.min.js" integrity="sha384-ufR9RFnRs6lniiaFvtJziE0YeidtAgBRH6ux2oUItHw5WTvE1zuk9uzhUU/FJXDp" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="69a276ce-839a-4369-81da-e7e2ec7f888f" data-root-id="4233"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="5035">
+          {"35433db2-4cd6-431a-9f82-d5a04da86d04":{"roots":{"references":[{"attributes":{"children":[{"id":"4232"},{"id":"4230"}]},"id":"4233","type":"Column"},{"attributes":{},"id":"4028","type":"BasicTickFormatter"},{"attributes":{},"id":"4030","type":"CategoricalTickFormatter"},{"attributes":{},"id":"4032","type":"UnionRenderers"},{"attributes":{"end":191.380729471799},"id":"3995","type":"Range1d"},{"attributes":{},"id":"4004","type":"BasicTicker"},{"attributes":{},"id":"4033","type":"Selection"},{"attributes":{},"id":"4054","type":"ResetTool"},{"attributes":{"toolbar":{"id":"4231"},"toolbar_location":"above"},"id":"4232","type":"ToolbarBox"},{"attributes":{},"id":"4185","type":"Selection"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"4108"},{"id":"4109"},{"id":"4110"},{"id":"4111"},{"id":"4112"}]},"id":"4113","type":"Toolbar"},{"attributes":{"data":{"color":["#46317E","#46317E","#46317E","#46317E","#46317E","#46317E","#46317E","#46317E","#440154","#FDE724","#440154","#440154","#FDE724","#440154","#440154","#FDE724","#440154","#440154","#FDE724","#440154","#365A8C","#49C16D","#49C16D","#440154","#FDE724","#440154","#440154","#FDE724","#440154","#440154","#FDE724","#440154","#440154","#FDE724","#440154","#365A8C","#49C16D","#49C16D","#277E8E","#1EA087","#9DD93A"],"function":["getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","_","subgraph_callable(broadcast_to(_, *))","_","_","subgraph_callable(broadcast_to(_, *))","_","_","subgraph_callable(broadcast_to(_, *))","_","_","subgraph_callable(broadcast_to(_, *))","_","mean_agg([_, _, _, ...])","subgraph_callable(_)","subgraph_callable(_)","_","subgraph_callable(broadcast_to(_, *))","_","_","subgraph_callable(broadcast_to(_, *))","_","_","subgraph_callable(broadcast_to(_, *))","_","_","subgraph_callable(broadcast_to(_, *))","_","mean_agg([_, _, _, ...])","subgraph_callable(_)","subgraph_callable(_)","nanmax([_, _])","nanmin([_, _])","subgraph_callable(_, _)"],"key":["('open_dataset-concatenate-c65d8386de0ea7038d3d5fb40e42f881', 1, 0, 0)","('open_dataset-concatenate-c65d8386de0ea7038d3d5fb40e42f881', 0, 0, 0)","('open_dataset-concatenate-c65d8386de0ea7038d3d5fb40e42f881', 2, 0, 0)","('open_dataset-concatenate-c65d8386de0ea7038d3d5fb40e42f881', 3, 0, 0)","('open_dataset-concatenate-7b153c3806d78e81e62d87530f0e5d45', 0, 0, 0)","('open_dataset-concatenate-7b153c3806d78e81e62d87530f0e5d45', 1, 0, 0)","('open_dataset-concatenate-7b153c3806d78e81e62d87530f0e5d45', 2, 0, 0)","('open_dataset-concatenate-7b153c3806d78e81e62d87530f0e5d45', 3, 0, 0)","('concatenate-c65d8386de0ea7038d3d5fb40e42f881', 1, 0, 0)","('broadcast_to-concatenate-mean_chunk-e4f737686614311389c59cdb68d02d2c', 0, 1, 0, 0)","('mean_chunk-e4f737686614311389c59cdb68d02d2c', 0, 1, 0, 0)","('concatenate-c65d8386de0ea7038d3d5fb40e42f881', 0, 0, 0)","('broadcast_to-concatenate-mean_chunk-e4f737686614311389c59cdb68d02d2c', 0, 0, 0, 0)","('mean_chunk-e4f737686614311389c59cdb68d02d2c', 0, 0, 0, 0)","('concatenate-c65d8386de0ea7038d3d5fb40e42f881', 3, 0, 0)","('broadcast_to-concatenate-mean_chunk-e4f737686614311389c59cdb68d02d2c', 0, 3, 0, 0)","('mean_chunk-e4f737686614311389c59cdb68d02d2c', 0, 3, 0, 0)","('concatenate-c65d8386de0ea7038d3d5fb40e42f881', 2, 0, 0)","('broadcast_to-concatenate-mean_chunk-e4f737686614311389c59cdb68d02d2c', 0, 2, 0, 0)","('mean_chunk-e4f737686614311389c59cdb68d02d2c', 0, 2, 0, 0)","('mean_agg-aggregate-c320fcd5264d11753fb46bd2b85c03d9', 0, 0, 0)","('nanmax-d3324d3b8647616e2ebf353d75fa583e', 0, 0, 0)","('nanmin-8ff1ae3620749ec483d390db433a23e5', 0, 0, 0)","('concatenate-7b153c3806d78e81e62d87530f0e5d45', 0, 0, 0)","('broadcast_to-concatenate-mean_chunk-e4f737686614311389c59cdb68d02d2c', 1, 0, 0, 0)","('mean_chunk-e4f737686614311389c59cdb68d02d2c', 1, 0, 0, 0)","('concatenate-7b153c3806d78e81e62d87530f0e5d45', 1, 0, 0)","('broadcast_to-concatenate-mean_chunk-e4f737686614311389c59cdb68d02d2c', 1, 1, 0, 0)","('mean_chunk-e4f737686614311389c59cdb68d02d2c', 1, 1, 0, 0)","('concatenate-7b153c3806d78e81e62d87530f0e5d45', 2, 0, 0)","('broadcast_to-concatenate-mean_chunk-e4f737686614311389c59cdb68d02d2c', 1, 2, 0, 0)","('mean_chunk-e4f737686614311389c59cdb68d02d2c', 1, 2, 0, 0)","('concatenate-7b153c3806d78e81e62d87530f0e5d45', 3, 0, 0)","('broadcast_to-concatenate-mean_chunk-e4f737686614311389c59cdb68d02d2c', 1, 3, 0, 0)","('mean_chunk-e4f737686614311389c59cdb68d02d2c', 1, 3, 0, 0)","('mean_agg-aggregate-c320fcd5264d11753fb46bd2b85c03d9', 1, 0, 0)","('nanmax-d3324d3b8647616e2ebf353d75fa583e', 1, 0, 0)","('nanmin-8ff1ae3620749ec483d390db433a23e5', 1, 0, 0)","('nanmax-aggregate-df1c5949d4e5d0c780aba02f671d2901', 0, 0)","('nanmin-aggregate-2efab5209b733e4f956c23884313d47f', 0, 0)","('sub-dd54572fd2ebf205fa50bcfb1767d70e', 0, 0)"],"width":[25.223155540879816,50.89428271516226,96.64200745616108,57.09761993493885,121.77132103405893,161.22517860704102,184.33283685101196,190.88701658998616,0.0003852320369333029,1.8192329960875213,0.0005490290932357311,0.0005733917932957411,1.5787611240521073,0.0003699429798871279,0.0004487831611186266,0.48208929505199194,0.0003684060648083687,0.0004769179504364729,1.6130187641829252,0.00041410396806895733,0.02116960589773953,0.001009967876598239,0.0012145249638706446,0.0005533299408853054,1.6293440361041576,0.000499950023368001,0.00046469690278172493,1.6222736979834735,0.0003741169348359108,0.0006168188992887735,1.6067358150612563,0.0003529360983520746,0.0003064749762415886,0.47980555100366473,0.0003237358760088682,0.002174236113205552,0.0012882170267403126,0.0013458789326250553,0.0016551120206713676,0.0019020079635083675,0.007534489966928959],"x":[12.611577770439908,25.447217788314447,48.3210901808925,28.548906012438238,60.88576840586029,80.61270702932961,92.16654559830204,95.44364625797607,25.22338567697443,26.13324407185428,27.043193680467084,50.89471540902741,51.68442410090938,52.4740270182956,57.09797893255018,57.33926770137623,57.580536528956145,96.64238396310247,97.4491722478997,98.25592812080868,98.26673539704643,98.27785977697931,98.27801647759043,121.77178191090934,122.5867932990659,123.4017589550931,161.22560433135368,162.037063669879,162.8484261573758,184.33342365152203,185.137143823551,185.9407253668178,190.887328336481,191.1274039184209,191.36750714597292,191.36877094884403,191.37052342644893,191.37059239833616,191.37200499582104,191.3722288319841,191.37696222681552],"y":[8,7,5,6,4,3,2,1,30,9,24,22,14,32,28,15,33,26,12,29,17,21,20,23,10,25,27,11,31,30,13,24,7,16,14,18,28,19,15,33,5]},"selected":{"id":"4033"},"selection_policy":{"id":"4032"}},"id":"4021","type":"ColumnDataSource"},{"attributes":{"axis":{"id":"4003"},"grid_line_color":null,"ticker":null},"id":"4006","type":"Grid"},{"attributes":{},"id":"4182","type":"UnionRenderers"},{"attributes":{},"id":"4183","type":"Selection"},{"attributes":{"dimensions":"width"},"id":"4056","type":"PanTool"},{"attributes":{"axis_label":"% CPU","formatter":{"id":"4070"},"ticker":{"id":"4050"}},"id":"4049","type":"LinearAxis"},{"attributes":{"dimensions":"width"},"id":"4055","type":"WheelZoomTool"},{"attributes":{},"id":"4184","type":"UnionRenderers"},{"attributes":{},"id":"4068","type":"BasicTickFormatter"},{"attributes":{},"id":"4186","type":"UnionRenderers"},{"attributes":{"data_source":{"id":"4062"},"glyph":{"id":"4063"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4064"},"selection_glyph":null,"view":{"id":"4066"}},"id":"4065","type":"GlyphRenderer"},{"attributes":{"end":7077.986304,"start":1411.383296},"id":"4074","type":"Range1d"},{"attributes":{},"id":"4053","type":"SaveTool"},{"attributes":{"source":{"id":"4062"}},"id":"4066","type":"CDSView"},{"attributes":{"below":[{"id":"4045"}],"center":[{"id":"4048"},{"id":"4052"},{"id":"4072"}],"extra_y_ranges":{"memory":{"id":"4074"}},"left":[{"id":"4049"}],"min_border_bottom":20,"min_border_left":75,"min_border_right":75,"min_border_top":20,"plot_height":240,"plot_width":800,"renderers":[{"id":"4065"},{"id":"4078"}],"right":[{"id":"4088"}],"title":null,"toolbar":{"id":"4057"},"toolbar_location":null,"x_range":{"id":"3995"},"x_scale":{"id":"4041"},"y_range":{"id":"4039"},"y_scale":{"id":"4043"}},"id":"4034","subtype":"Figure","type":"Plot"},{"attributes":{"items":[{"id":"4073"},{"id":"4087"}]},"id":"4072","type":"Legend"},{"attributes":{"children":[[{"id":"3992"},0,0],[{"id":"4034"},1,0],[{"id":"4089"},2,0]]},"id":"4230","type":"GridBox"},{"attributes":{},"id":"4070","type":"BasicTickFormatter"},{"attributes":{"label":{"value":"% CPU"},"renderers":[{"id":"4065"}]},"id":"4073","type":"LegendItem"},{"attributes":{},"id":"4206","type":"Selection"},{"attributes":{"line_color":"#29788E","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"4076","type":"Line"},{"attributes":{"source":{"id":"4125"}},"id":"4130","type":"CDSView"},{"attributes":{"data":{"x":[0.0,0.2849349481984973,0.5354158801492304,0.7861159960739315,1.0367317530326545,1.287382657174021,1.538073678035289,1.788797815097496,2.0393577811773866,2.289790543029085,2.540342824999243,2.7908228021115065,3.0414016670547426,3.292041930137202,3.5426420071162283,3.7933522020466626,4.044057814171538,4.294755302136764,4.545444853138179,4.796183199156076,5.046850188169628,5.297534617129713,5.548148228088394,5.798908291151747,6.049629845190793,6.3001883800607175,6.550726395100355,6.801266944035888,7.051683119032532,7.302008590195328,7.552502078004181,7.803136435104534,8.053662679158151,8.304249112028629,8.554809413151816,8.805353302974254,9.055745070101693,9.306241765152663,9.556750470073894,9.807359453989193,10.058006596984342,10.30873322300613,10.559436633018777,10.810168531024829,11.060834971023723,11.3113324821461,11.561935130972415,11.812651809072122,12.063316119136289,12.314048912143335,12.564595876028761,12.815317287109792,13.065908626187593,13.316502401139587,13.567172779003158,13.817793859168887,14.068451571045443,14.319036591099575,14.56976838898845,14.820437322137877,15.071170182200149,15.321849160129204,15.57243799418211,15.823101500049233,16.073717141058296,16.32438092213124,16.574946941109374,16.825657627079636,17.07634188607335,17.326971255009994,17.577651672065258,17.82841283013113,18.07910346100107,18.329659373033792,18.58003690605983,18.830580545123667,19.08105399715714,19.33161262702197,19.582027507014573,19.83261942700483,20.083147660130635,20.33377172006294,20.584422290092334,20.835002289153636,21.08568319119513,21.33630633004941,21.58701536618173,21.83764886506833,22.08833763212897,22.338976028142497,22.589671611087397,22.840290314983577,23.090980565175414,23.34170914418064,23.592311949003488,23.842875803122297,24.093583142152056,24.34423901606351,24.59492983808741,24.845535043161362,25.09607259905897,25.34671886311844,25.59737000009045,25.848114570137113,26.09884345298633,26.34950154204853,26.60021241218783,26.850857984041795,27.101540793199092,27.35213619004935,27.602759733097628,27.853400213178247,28.10402841400355,28.35450721718371,28.605059541994706,28.85561307100579,29.106199545087293,29.356882147025317,29.607602960197255,29.85829215706326,30.10886224010028,30.35948203317821,30.61019551497884,30.860890716081485,31.111584105994552,31.362202301155776,31.61275721201673,31.863390239188448,32.1140137151815,32.36465333518572,32.61524761118926,32.86591247515753,33.11656588502228,33.36719513614662,33.617887697182596,33.86844048509374,34.11913338210434,34.36963277403265,34.62026378605515,34.870769110973924,35.12145764101297,35.37196047301404,35.62270139204338,35.87334112310782,36.124027820071205,36.37473016814329,36.625436529982835,36.87600998417474,37.12659993697889,37.377272888086736,37.62787020811811,37.8785954231862,38.12929305317812,38.37998837605119,38.63061673915945,38.88130682404153,39.13186813914217,39.38256319705397,39.63323824806139,39.88397629815154,40.134551496012136,40.38524157111533,40.635937268147245,40.88663115003146,41.137300989124924,41.38786873104982,41.638500194996595,41.888953373068944,42.1395005970262,42.39003769005649,42.64061257406138,42.891321037197486,43.14204194699414,43.39270469616167,43.643379332032055,43.89407447911799,44.14473423897289,44.39542403817177,44.645991411060095,44.89661502907984,45.147301936056465,45.398002905072644,45.64870894304477,45.89937869505957,46.15001788409427,46.40063346014358,46.65128342411481,46.90197128802538,47.15265684318729,47.4033557951916,47.65406582201831,47.90471258107573,48.1552211411763,48.40573242516257,48.65624893899076,48.9068571079988,49.15757915517315,49.40825054515153,49.65894306101836,49.909616333199665,50.16018283413723,50.41070014005527,50.66132003697567,50.91187290707603,51.16244249907322,51.41292356699705,51.663340660976246,51.91401566914283,52.164680536137894,52.41530547407456,52.66582116717473,52.916526701068506,53.16723377117887,53.41790419910103,53.668432356091216,53.91907660313882,54.169753584079444,54.42041372717358,54.67092611617409,54.92161162709817,55.17224681703374,55.42282318510115,55.67340649710968,55.92393527016975,56.174548969138414,56.42503988998942,56.675625815056264,56.92603882099502,57.17648537317291,57.42703383299522,57.67760120215826,57.928310870192945,58.17904573213309,58.429702720139176,58.68043554201722,58.93116775597446,59.181677777087316,59.432366932043806,59.683044037083164,59.933741650078446,60.18441743799485,60.435094917193055,60.685780788073316,60.936480122152716,61.187071850989014,61.43773109302856,61.68846683204174,61.939196177059785,62.189879446988925,62.4405994520057,62.69136741198599,62.94207111001015,63.19278817414306,63.443448247155175,63.69416890107095,63.94485736312345,64.19553436408751,64.44589177006856,64.69647555914707,64.94704868714325,65.19744393113069,65.4479208230041,65.69849306112155,65.94885252718814,66.19940581102856,66.45009023998864,66.70069278217852,66.9512889070902,67.20182971097529,67.45230550109409,67.70276737003587,67.95333949709311,68.20387978712097,68.45434765610844,68.70489831804298,68.95549794402905,69.20611297804862,69.45676659303717,69.70735246199183,69.95801513409242,70.20870341011323,70.45936476998031,70.71006862912327,70.96077858097851,71.21140194218606,71.46197587717324,71.71247645514086,71.96294040908106,72.21343927108683,72.46402456099167,72.71466618217528,72.9653408380691,73.21591085311957,73.46643903013319,73.71708876802586,73.96781110600568,74.21850052801892,74.46919741714373,74.7199110800866,74.97044032905251,75.22105901897885,75.47179011697881,75.7225505260285,75.97316564619541,76.22386001097038,76.47443251009099,76.72509727906436,76.97560201119632,77.2262159131933,77.4769098830875,77.72764433617704,77.97836693609133,78.22897815005854,78.47957822307944,78.73032514913939,78.9808863431681,79.23157215607353,79.48225113097578,79.73296935902908,79.98353621317074,80.2342053130269,80.48484211415052,80.73550455411896,80.98607229907066,81.23673766502179,81.48741665203124,81.73809483507648,81.98883725819178,82.23949050204828,82.49000304401852,82.74066124204546,82.99131112219766,83.24192957719788,83.49259189306758,83.74333266215399,83.99399515707046,84.24468910112046,84.49527836218476,84.74600971210748,84.99673311901279,85.24740801518783,85.49810152803548,85.7486939909868,85.99940218403935,86.25013069808483,86.50080970604904,86.75153788016178,87.00223577604629,87.25289051118307,87.50342651712708,87.75413416302763,88.0047914320603,88.25542748207226,88.50608918908983,88.75683777011,89.00757530517876,89.25829728203826,89.50893447897397,89.75954093807377,90.0100530711934,90.26068007200956,90.51126004219986,90.7619387570303,91.01260334718972,91.26313490211032,91.51382208801806,91.76449432200752,92.01518468908034,92.2658517761156,92.51643175515346,92.76710919407196,93.01780977007002,93.26841468317434,93.51890341215767,93.76948597002774,94.01990218204446,94.2703411411494,94.52091198111884,94.77146891015582,95.02203405718319,95.27252459200099,95.52309876610525,95.77370076207444,96.02435920503922,96.27496572816744,96.525460987119,96.77591766603291,97.02650252403691,97.27714796410874,97.5277881580405,97.77840767102316,98.02893212204799,98.27952159917913,98.5299943741411,98.78066558018327,99.03134950809181,99.28202378400601,99.53267237311229,99.78325180197135,100.03391342610121,100.28442319412716,100.53493027505465,100.78559500700794,101.03624849906191,101.28671830217354,101.53725288202986,101.78781553311273,102.03840662818402,102.28892877115868,102.53946371516213,102.79016497312114,103.04086802410893,103.29156383499503,103.54228829406202,103.79297080310062,104.04368120897561,104.29434084915556,104.54496950819157,104.79559966409579,105.04621691303328,105.29692753613926,105.547571772011,105.79810472414829,106.04875921201892,106.2993699000217,106.54996879515238,106.80071429302916,107.05137674510479,107.30206855013967,107.55272844317369,107.80343156401068,108.05400121514685,108.30463717505336,108.55513395112939,108.80577102815732,109.05635961098596,109.306924614124,109.55741000315174,109.80794666009024,110.05851806816645,110.30906062107533,110.55958675104193,110.81024279701523,111.06084151216783,111.31129599618725,111.56186757213436,111.81252849008888,112.06318582012318,112.31377556920052,112.5644427430816,112.81515946309082,113.06585757713765,113.31656303512864,113.56721873907372,113.81788472714834,114.06852751015685,114.31916680908762,114.56978856399655,114.82043673703447,115.07104802597314,115.32170687103644,115.57239945512265,115.82307234010659,116.0737618720159,116.32446594699286,116.57506290613674,116.82571696210653,117.0762743181549,117.32693691505119,117.57761193509214,117.82827007514425,118.0789882009849,118.32956298603676,118.58016330818646,118.83078687102534,119.08138077915646,119.33195696398616,119.58267472614534,119.83330773608759,120.08388278307393,120.33441662904806,120.58504436304793,120.8356400881894,121.0862237541005,121.33690097904764,121.58753567817621,121.83816910418682,122.08880571112968,122.33926896913908,122.58990254811943,122.84055977500975,123.09115270897746,123.3417750261724,123.59242444508709,123.84314463916235,124.09376947907731,124.34433696419,124.59501335700043,124.84570081811398,125.09632496419363,125.34702329616994,125.59773892210796,125.84843420912512,126.09909879905172,126.34968488407321,126.60021906206384,126.85067823901772,127.1013600511942,127.35191476112232,127.6026131620165,127.8532318409998,128.10382461408153,128.35442267917097,128.60505943815224,128.85566670098342,129.10607656114735,129.35661890916526,129.6070867050439,129.85770740709268,130.10839609103277,130.35907999798656,130.60964685701765,130.8603687910363,131.11104466603138,131.36169884214178,131.61243472597562,131.86312384414487,132.11370460805483,132.36434039101005,132.61507421801798,132.86577247618698,133.11641254019924,133.36707837413996,133.61776782711968,133.86845269799232,134.1190685890615,134.36978486017324,134.620539088035,134.87125403317623,135.121901123086,135.3726046651136,135.62326498609036,135.87393509200774,136.1246346370317,136.37530471105129,136.62597891013138,136.87657849909738,137.12728680600412,137.3780011869967,137.62867192109115,137.87935767299496,138.13006862206385,138.38077212916687,138.63142624218017,138.88197359605692,139.1325052890461,139.38318077102304,139.63383987010457,139.88450210611336,140.13520360016264,140.3857344260905,140.6364330430515,140.88702039816417,141.13766679400578,141.38834995008074,141.63903269707225,141.88962667412125,142.14033026411198,142.3909840991255,142.64168416406028,142.8923046111595,143.1429577250965,143.39365149103105,143.6443088511005,143.89497818099335,144.14565130299889,144.3963033091277,144.64702054997906,144.89771024603397,145.14839079417288,145.3989799960982,145.64967772597447,145.90038541913964,146.15106843900867,146.40173305710778,146.65240737819113,146.9031108240597,147.153700316092,147.40432843216695,147.65503338398412,147.90566605399363,148.156364295166,148.40692213899456,148.65757599519566,148.90828744298778,149.1590434210375,149.4095766050741,149.66017450205982,149.91082829306833,150.16127047897317,150.4117602701299,150.6622109171003,150.9127808981575,151.1633286261931,151.41401926917024,151.66472038906068,151.91532581602223,152.166049889056,152.41670842003077,152.66742449998856,152.91813902999274,153.16884103999473,153.41947416518815,153.67022693506442,153.92085882998072,154.17158284317702,154.4222078451421,154.67278888914734,154.92349231918342,155.17421816498972,155.42492066603154,155.67554905614816,155.92620208207518,156.1768703002017,156.42749299807474,156.67818376701325,156.92890309216455,157.1794397791382,157.43011987605132,157.68073750799522,157.93130457913503,158.18199409218505,158.4325371379964,158.6832042541355,158.9339285590686,159.18454458005726,159.43521329201758,159.6859266089741,159.9365353640169,160.1870871190913,160.43756520515308,160.68811870203353,160.93869932903908,161.18928002309985,161.43992643197998,161.69058269704692,161.94122500997037,162.1918503951747,162.44248251314275,162.6930676170159,162.94370643701404,163.1943724839948,163.44502090313472,163.6956270460505,163.9462699831929,164.19686722615734,164.44750009197742,164.69815461803228,164.94884297205135,165.19942021206953,165.45006966008805,165.70078347809613,165.95146788004786,166.20211655204184,166.45270848297514,166.70341919898055,166.95404808712192,167.20470889098942,167.4554004170932,167.7061287839897,167.9568113090936,168.20742461713962,168.4580260461662,168.70875742519274,168.95941257919185,169.20996771217324,169.4605233920738,169.7112294251565,169.96184189710766,170.21246168506332,170.46292358706705,170.71359956008382,170.96412461111322,171.21471198112704,171.4652698400896,171.71589320106432,171.96646200702526,172.21714871702716,172.4677928360179,172.7184202200733,172.9689530651085,173.21942170406692,173.4699477381073,173.7206421350129,173.9712970131077,174.22202943102457,174.47273369203322,174.72346273506992,174.97418545302935,175.22491467604414,175.4756166911684,175.72623462416232,175.97681727004237,176.22753540007398,176.478271498112,176.73591621313244,176.9866530210711,177.2372541751247,177.48798455414362,177.73876932100393,177.98951135599054,178.24017011001706,178.4907902230043,178.74153343518265,178.99209328810684,179.24283766001463,179.49337989510968,179.74405892100185,179.99478895915672,180.2454480540473,180.49610645417124,180.746935244184,180.99771631206386,181.24847913905978,181.4992138601374,181.7500535901636,182.00085439207032,182.25158019317314,182.50217368919402,182.75286320620216,183.00355414114892,183.25426982319914,183.505003164988,183.7557706600055,184.00643243920058,184.25710736308247,184.50781950098462,184.7585032461211,185.0092124589719,185.25975135015324,185.51026769401506,185.7608759130817,186.01154282409698,186.26228625304066,186.5129778960254,186.76373132597655,187.0144303701818,187.2651526001282,187.51587169617414,187.76663593598641,188.01736374315806,188.26814540219493,188.5189714920707,188.7697750311345,189.02035105018876,189.27105253515765,189.52175303315744,189.77246524812654,190.02317940513603,190.27386206015944,190.5243759190198,190.77515778318048,191.02589805610478,191.27670552418567],"y":[1411.383296,1543.778304,1591.66464,1621.024768,1659.359232,1680.826368,1695.506432,1714.823168,1729.72032,1744.613376,1757.196288,1776.545792,1791.225856,1814.417408,1837.961216,1857.048576,1897.054208,1937.600512,1965.088768,1981.865984,1996.947456,2011.643904,2032.9472,2045.587456,2060.275712,2077.052928,2113.122304,2130.141184,2149.060608,2184.769536,2214.432768,2233.4464,2246.029312,2260.709376,2269.097984,2279.583744,2301.165568,2322.55488,2349.8752,2381.459456,2400.411648,2432.315392,2455.552,2480.848896,2499.731456,2519.212032,2536.034304,2550.837248,2561.37216,2578.378752,2601.484288,2625.060864,2654.691328,2688.331776,2722.029568,2743.062528,2764.193792,2781.42976,2804.543488,2817.47456,2836.361216,2853.146624,2865.750016,2882.576384,2909.986816,2931.318784,2952.31488,2964.901888,2979.631104,2994.343936,3004.829696,3019.558912,3040.534528,3055.218688,3074.568192,3091.484672,3110.744064,3135.922176,3173.736448,3194.707968,3224.121344,3240.906752,3259.785216,3280.809984,3297.619968,3318.70208,3335.725056,3360.944128,3386.191872,3409.272832,3447.148544,3487.240192,3508.502528,3532.099584,3540.488192,3558.486016,4085.354496,4222.066688,4645.35552,5371.133952,6095.577088,4073.541632,4356.17792,4021.694464,4457.259008,5174.571008,5893.963776,6463.311872,1938.157568,1961.508864,1982.697472,2007.949312,2035.572736,2052.54656,2071.42912,2086.305792,2105.4464,2122.493952,2137.186304,2156.077056,2175.102976,2200.743936,2213.330944,2234.302464,2274.885632,2295.902208,2312.716288,2323.369984,2338.0992,2357.510144,2376.62208,2391.302144,2410.528768,2437.865472,2460.995584,2473.84064,2514.178048,2530.95936,2554.044416,2571.001856,2589.990912,2602.590208,2617.298944,2631.9872,2649.030656,2667.95008,2699.431936,2726.928384,2754.285568,2779.717632,2798.600192,2815.639552,2830.348288,2845.028352,2861.809664,2881.048576,2893.635584,2910.416896,2923.020288,2935.836672,2973.663232,3003.20768,3024.1792,3037.106176,3051.819008,3070.722048,3090.067456,3106.87744,3123.712,3136.303104,3146.797056,3165.700096,3186.724864,3211.890688,3232.976896,3251.929088,3262.414848,3281.3056,3296.165888,3313.037312,3327.721472,3347.034112,3365.924864,3385.090048,3401.9328,3435.491328,3469.258752,3492.327424,3505.225728,3522.06848,3534.675968,3549.71648,3564.40064,3585.376256,3600.05632,3615.019008,3638.104064,3669.622784,3932.315648,4266.438656,4418.953216,5132.67712,5860.585472,3978.05568,4413.784064,4089.921536,4714.717184,5507.702784,6300.42624,6520.492032,1995.354112,2018.582528,2031.382528,2057.023488,2084.487168,2101.481472,2118.258688,2135.20384,2152.22272,2169.46688,2188.341248,2209.501184,2222.55104,2243.52256,2264.49408,2289.74592,2319.351808,2814.631936,2639.269888,3099.648,1935.147008,1956.880384,1969.463296,1984.339968,1997.664256,2008.150016,2016.538624,2029.121536,2041.749504,2056.900608,2067.398656,2080.006144,2098.909184,2115.698688,2128.515072,2143.461376,2156.05248,2166.542336,2179.125248,2189.631488,2198.020096,2212.724736,2221.338624,2236.145664,2255.09376,2274.336768,2284.822528,2295.345152,2307.964928,2323.038208,2337.726464,2348.347392,2363.277312,2377.99424,2388.594688,2399.080448,2413.760512,2424.246272,2432.63488,2445.238272,2457.939968,2474.729472,2489.495552,2502.22592,2519.465984,2532.298752,2544.893952,2553.294848,2561.683456,2582.806528,2595.397632,2614.276096,2625.122304,2635.608064,2650.3168,2658.820096,2673.852416,2686.500864,2697.1136,2709.876736,2720.366592,2741.571584,2754.629632,2771.406848,2781.896704,2796.576768,2809.18016,2823.901184,2834.403328,2846.98624,2857.472,2870.054912,2880.557056,2895.2576,2914.394112,2926.997504,2946.080768,2960.826368,2975.535104,2986.049536,3000.856576,3013.558272,3026.28864,3038.990336,3047.387136,3060.015104,3074.809856,3087.450112,3098.066944,3113.218048,3123.712,3136.34816,3151.028224,3164.069888,3187.150848,3199.7952,3212.51328,3223.482368,3238.162432,3248.648192,3261.243392,3271.774208,3284.615168,3295.105024,3307.687936,3322.888192,3335.471104,3345.965056,3356.450816,3371.134976,3392.110592,3406.794752,3413.127168,3423.612928,3434.135552,3442.638848,3451.256832,3459.64544,3472.232448,3484.819456,3495.305216,3507.900416,3522.58048,3533.06624,3547.77088,3556.159488,3562.921984,3573.440512,3581.845504,3596.611584,3609.202688,3617.611776,3630.215168,3643.00288,3664.039936,3674.525696,3682.914304,3693.400064,3708.080128,3722.776576,3737.493504,3743.932416,3754.442752,3764.977664,3779.670016,3792.293888,3809.09568,3821.682688,3834.2656,3851.20256,3863.601152,4429.631488,4518.273024,5002.379264,5722.447872,6425.382912,4452.43392,4650.8032,4561.825792,5269.798912,6023.163904,6726.172672,2199.277568,2218.37312,2245.849088,2260.529152,2285.871104,2325.938176,2364.06784,2385.03936,2399.911936,2412.99456,2427.674624,2451.202048,2472.415232,2485.174272,2508.263424,2535.95648,2555.195392,2580.39808,2597.21216,2622.386176,2639.863808,2654.568448,2673.451008,2690.576384,2703.409152,2718.117888,2737.000448,2772.774912,2791.759872,2821.148672,2849.247232,2866.024448,2885.050368,2903.945216,2920.787968,2935.877632,2954.77248,2969.800704,2988.68736,3015.950336,3036.942336,3055.874048,3081.519104,3102.027776,3125.358592,3146.4448,3158.704128,3175.481344,3195.74016,3206.938624,3225.817088,3242.827776,3271.122944,3292.40576,3324.489728,3343.364096,3371.778048,3387.84256,3400.081408,3416.326144,3431.133184,3452.133376,3477.336064,3489.931264,3519.295488,3534.327808,3570.049024,3599.425536,3612.020736,3633.217536,3650.031616,3662.618624,3675.316224,3694.444544,3709.145088,3730.116608,3753.414656,3774.779392,3797.856256,3829.673984,3852.742656,3867.4432,3880.087552,3901.075456,3918.016512,3932.696576,3949.477888,3966.476288,3995.93472,4366.573568,4638.793728,4925.661184,5632.4096,6337.531904,4427.718656,4756.15232,4522.524672,5162.835968,5901.049856,6633.377792,6841.720832,2310.832128,2327.662592,2344.439808,2354.929664,2372.190208,2388.983808,2403.684352,2416.51712,2431.20128,2441.695232,2454.736896,2463.125504,2473.627648,2482.266112,2493.104128,2512.211968,2524.8768,2541.899776,2554.540032,2567.12704,2577.620992,2588.192768,2598.72768,2609.21344,2621.812736,2632.43776,2645.037056,2660.360192,2673.004544,2685.62432,2700.34944,2713.27232,2725.855232,2738.675712,2753.355776,2768.072704,2780.790784,2793.381888,2812.489728,2822.979584,2833.473536,2844.143616,2865.324032,2873.716736,2884.210688,2895.151104,2907.738112,2916.12672,2928.709632,2943.393792,2958.11072,2970.701824,2985.979904,2996.506624,3009.097728,3019.583488,3030.069248,3036.48768,3046.989824,3057.504256,3070.087168,3080.577024,3093.159936,3105.779712,3122.561024,3139.50208,3154.190336,3166.773248,3181.469696,3189.98528,3196.276736,3204.665344,3215.179776,3225.706496,3240.394752,3257.30304,3272.105984,3290.988544,3307.880448,3326.926848,3339.513856,3350.003712,3362.816,3373.305856,3383.947264,3394.449408,3409.16224,3421.782016,3428.306944,3447.189504,3457.675264,3480.76032,3493.347328,3504.295936,3516.878848,3529.46176,3539.951616,3546.361856,3554.750464,3567.333376,3579.916288,3592.617984,3605.241856,3619.995648,3628.412928,3636.822016,3645.210624,3655.970816,3662.512128,3673.100288,3681.488896,3696.16896,3704.594432,3715.080192,3725.692928,3736.178688,3750.858752,3759.24736,3769.749504,3782.332416,3794.915328,3807.5392,3818.049536,3828.563968,3839.0784,3849.56416,3864.469504,3883.749376,3900.821504,3911.315456,3926.03648,3940.7616,3953.393664,3968.073728,3978.563584,3993.276416,4007.95648,4022.86592,4038.16448,4061.278208,4073.873408,4086.509568,4099.13344,4113.829888,4124.32384,4301.971456,4777.312256,4824.723456,5476.61824,6198.247424,6918.43072,4908.883968,4474.667008,5029.412864,5769.936896,6519.115776,7004.151808,2474.688512,2502.356992,2536.374272,2570.145792,2608.8448,2646.593536,2661.953536,2678.751232,2699.75552,2716.553216,2733.355008,2754.383872,2773.266432,2790.535168,2815.905792,2841.440256,2877.120512,2896.007168,2919.309312,2934.173696,2955.153408,2978.824192,2989.334528,3004.284928,3029.692416,3054.91968,3071.930368,3103.653888,3137.777664,3173.818368,3203.19488,3219.980288,3236.921344,3255.803904,3274.932224,3298.209792,3319.201792,3338.661888,3359.690752,3385.090048,3419.041792,3454.717952,3480.297472,3507.576832,3528.585216,3547.459584,3570.556928,3587.375104,3604.631552,3623.624704,3640.799232,3657.592832,3682.79552,3708.33408,3727.212544,3767.062528,3792.236544,3809.01376,3827.888128,3844.677632,3861.454848,3876.282368,3895.156736,3914.039296,3935.051776,3960.233984,3988.135936,4007.120896,4032.344064,4044.967936,4063.842304,4080.61952,4097.396736,4114.20672,4130.996224,4143.579136,4162.551808,4194.213888,4225.753088,4242.571264,4355.432448,4844.58496,4885.700608,5497.348096,6200.34048,6884.012032,4888.45312,5001.281536,4983.455744,5738.016768,6505.5744,7077.986304,2550.759424,2576.371712,2588.954624,2618.75712,2656.944128,2676.027392,2694.90176,2709.581824,2724.4544,2737.27488,2751.954944,2766.831616,2781.745152,2806.910976,2825.785344,2844.798976,2857.381888,2885.103616,3018.960896,3435.606016,2947.776512,3655.00416]},"selected":{"id":"4206"},"selection_policy":{"id":"4205"}},"id":"4075","type":"ColumnDataSource"},{"attributes":{"below":[{"id":"4003"}],"center":[{"id":"4006"},{"id":"4009"}],"left":[{"id":"4007"}],"min_border_bottom":20,"min_border_left":75,"min_border_right":75,"plot_height":270,"plot_width":800,"renderers":[{"id":"4025"}],"title":{"id":"3993"},"toolbar":{"id":"4015"},"toolbar_location":null,"x_range":{"id":"3995"},"x_scale":{"id":"3999"},"y_range":{"id":"3997"},"y_scale":{"id":"4001"}},"id":"3992","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"4086","type":"Selection"},{"attributes":{"line_alpha":0.1,"line_color":"#29788E","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"4077","type":"Line"},{"attributes":{"source":{"id":"4075"}},"id":"4079","type":"CDSView"},{"attributes":{"data_source":{"id":"4075"},"glyph":{"id":"4076"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4077"},"selection_glyph":null,"view":{"id":"4079"},"y_range_name":"memory"},"id":"4078","type":"GlyphRenderer"},{"attributes":{"label":{"value":"Memory"},"renderers":[{"id":"4078"}]},"id":"4087","type":"LegendItem"},{"attributes":{"axis_label":"Memory (MB)","formatter":{"id":"4201"},"ticker":{"id":"4202"},"y_range_name":"memory"},"id":"4088","type":"LinearAxis"},{"attributes":{"toolbars":[{"id":"4015"},{"id":"4057"},{"id":"4113"}],"tools":[{"id":"4010"},{"id":"4011"},{"id":"4012"},{"id":"4013"},{"id":"4014"},{"id":"4053"},{"id":"4054"},{"id":"4055"},{"id":"4056"},{"id":"4108"},{"id":"4109"},{"id":"4110"},{"id":"4111"},{"id":"4112"}]},"id":"4231","type":"ProxyToolbar"},{"attributes":{},"id":"4202","type":"BasicTicker"},{"attributes":{"data":{"label":["getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)","getter(_, *)"],"x":[0,25.22383856307715,25.22425462398678,27.043550504138693,27.04414493893273,50.895071784965694,50.89567858004011,52.47448578896001,52.474888226017356,57.09840551903471,57.098879415076226,57.580994121031836,57.58139714994468,96.64278941904195,96.64329872909002,98.25636289012618,98.25681181810796,98.27799836406484,98.27904073009267,98.27929924195632,121.7721331671346,121.77273907698691,123.40214716596529,123.4026851109229,161.2260069779586,161.22651297599077,162.84888152801432,162.84928925614804,184.33371073612943,184.33440852095373,185.9411923729349,185.94157809996977,190.8878335680347,190.88815765897743,191.36798644415103,191.36834493395872,191.37053400999866,191.37184358597733,191.3719411259517,191.37350871507078,191.37385589908808,191.38140523596667,191.38171069696546],"y":[0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0]},"selected":{"id":"4173"},"selection_policy":{"id":"4172"}},"id":"4119","type":"ColumnDataSource"},{"attributes":{"below":[{"id":"4100"}],"center":[{"id":"4103"},{"id":"4107"}],"left":[{"id":"4104"}],"min_border_left":75,"min_border_right":75,"min_border_top":20,"plot_height":270,"plot_width":800,"renderers":[{"id":"4123"},{"id":"4129"},{"id":"4135"},{"id":"4141"},{"id":"4147"},{"id":"4153"},{"id":"4159"},{"id":"4165"}],"title":null,"toolbar":{"id":"4113"},"toolbar_location":null,"x_range":{"id":"3995"},"x_scale":{"id":"4096"},"y_range":{"id":"4094"},"y_scale":{"id":"4098"}},"id":"4089","subtype":"Figure","type":"Plot"},{"attributes":{"text":"Profile Results"},"id":"3993","type":"Title"},{"attributes":{},"id":"4050","type":"BasicTicker"},{"attributes":{},"id":"4201","type":"BasicTickFormatter"},{"attributes":{"line_color":"#FDE724","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4133","type":"Line"},{"attributes":{},"id":"4181","type":"Selection"},{"attributes":{"fill_color":{"field":"color"},"height":{"units":"data","value":1},"line_color":{"value":"gray"},"width":{"field":"width","units":"data"},"x":{"field":"x"},"y":{"field":"y"}},"id":"4023","type":"Rect"},{"attributes":{},"id":"4096","type":"LinearScale"},{"attributes":{"data":{"x":[0.0,0.2849349481984973,0.5354158801492304,0.7861159960739315,1.0367317530326545,1.287382657174021,1.538073678035289,1.788797815097496,2.0393577811773866,2.289790543029085,2.540342824999243,2.7908228021115065,3.0414016670547426,3.292041930137202,3.5426420071162283,3.7933522020466626,4.044057814171538,4.294755302136764,4.545444853138179,4.796183199156076,5.046850188169628,5.297534617129713,5.548148228088394,5.798908291151747,6.049629845190793,6.3001883800607175,6.550726395100355,6.801266944035888,7.051683119032532,7.302008590195328,7.552502078004181,7.803136435104534,8.053662679158151,8.304249112028629,8.554809413151816,8.805353302974254,9.055745070101693,9.306241765152663,9.556750470073894,9.807359453989193,10.058006596984342,10.30873322300613,10.559436633018777,10.810168531024829,11.060834971023723,11.3113324821461,11.561935130972415,11.812651809072122,12.063316119136289,12.314048912143335,12.564595876028761,12.815317287109792,13.065908626187593,13.316502401139587,13.567172779003158,13.817793859168887,14.068451571045443,14.319036591099575,14.56976838898845,14.820437322137877,15.071170182200149,15.321849160129204,15.57243799418211,15.823101500049233,16.073717141058296,16.32438092213124,16.574946941109374,16.825657627079636,17.07634188607335,17.326971255009994,17.577651672065258,17.82841283013113,18.07910346100107,18.329659373033792,18.58003690605983,18.830580545123667,19.08105399715714,19.33161262702197,19.582027507014573,19.83261942700483,20.083147660130635,20.33377172006294,20.584422290092334,20.835002289153636,21.08568319119513,21.33630633004941,21.58701536618173,21.83764886506833,22.08833763212897,22.338976028142497,22.589671611087397,22.840290314983577,23.090980565175414,23.34170914418064,23.592311949003488,23.842875803122297,24.093583142152056,24.34423901606351,24.59492983808741,24.845535043161362,25.09607259905897,25.34671886311844,25.59737000009045,25.848114570137113,26.09884345298633,26.34950154204853,26.60021241218783,26.850857984041795,27.101540793199092,27.35213619004935,27.602759733097628,27.853400213178247,28.10402841400355,28.35450721718371,28.605059541994706,28.85561307100579,29.106199545087293,29.356882147025317,29.607602960197255,29.85829215706326,30.10886224010028,30.35948203317821,30.61019551497884,30.860890716081485,31.111584105994552,31.362202301155776,31.61275721201673,31.863390239188448,32.1140137151815,32.36465333518572,32.61524761118926,32.86591247515753,33.11656588502228,33.36719513614662,33.617887697182596,33.86844048509374,34.11913338210434,34.36963277403265,34.62026378605515,34.870769110973924,35.12145764101297,35.37196047301404,35.62270139204338,35.87334112310782,36.124027820071205,36.37473016814329,36.625436529982835,36.87600998417474,37.12659993697889,37.377272888086736,37.62787020811811,37.8785954231862,38.12929305317812,38.37998837605119,38.63061673915945,38.88130682404153,39.13186813914217,39.38256319705397,39.63323824806139,39.88397629815154,40.134551496012136,40.38524157111533,40.635937268147245,40.88663115003146,41.137300989124924,41.38786873104982,41.638500194996595,41.888953373068944,42.1395005970262,42.39003769005649,42.64061257406138,42.891321037197486,43.14204194699414,43.39270469616167,43.643379332032055,43.89407447911799,44.14473423897289,44.39542403817177,44.645991411060095,44.89661502907984,45.147301936056465,45.398002905072644,45.64870894304477,45.89937869505957,46.15001788409427,46.40063346014358,46.65128342411481,46.90197128802538,47.15265684318729,47.4033557951916,47.65406582201831,47.90471258107573,48.1552211411763,48.40573242516257,48.65624893899076,48.9068571079988,49.15757915517315,49.40825054515153,49.65894306101836,49.909616333199665,50.16018283413723,50.41070014005527,50.66132003697567,50.91187290707603,51.16244249907322,51.41292356699705,51.663340660976246,51.91401566914283,52.164680536137894,52.41530547407456,52.66582116717473,52.916526701068506,53.16723377117887,53.41790419910103,53.668432356091216,53.91907660313882,54.169753584079444,54.42041372717358,54.67092611617409,54.92161162709817,55.17224681703374,55.42282318510115,55.67340649710968,55.92393527016975,56.174548969138414,56.42503988998942,56.675625815056264,56.92603882099502,57.17648537317291,57.42703383299522,57.67760120215826,57.928310870192945,58.17904573213309,58.429702720139176,58.68043554201722,58.93116775597446,59.181677777087316,59.432366932043806,59.683044037083164,59.933741650078446,60.18441743799485,60.435094917193055,60.685780788073316,60.936480122152716,61.187071850989014,61.43773109302856,61.68846683204174,61.939196177059785,62.189879446988925,62.4405994520057,62.69136741198599,62.94207111001015,63.19278817414306,63.443448247155175,63.69416890107095,63.94485736312345,64.19553436408751,64.44589177006856,64.69647555914707,64.94704868714325,65.19744393113069,65.4479208230041,65.69849306112155,65.94885252718814,66.19940581102856,66.45009023998864,66.70069278217852,66.9512889070902,67.20182971097529,67.45230550109409,67.70276737003587,67.95333949709311,68.20387978712097,68.45434765610844,68.70489831804298,68.95549794402905,69.20611297804862,69.45676659303717,69.70735246199183,69.95801513409242,70.20870341011323,70.45936476998031,70.71006862912327,70.96077858097851,71.21140194218606,71.46197587717324,71.71247645514086,71.96294040908106,72.21343927108683,72.46402456099167,72.71466618217528,72.9653408380691,73.21591085311957,73.46643903013319,73.71708876802586,73.96781110600568,74.21850052801892,74.46919741714373,74.7199110800866,74.97044032905251,75.22105901897885,75.47179011697881,75.7225505260285,75.97316564619541,76.22386001097038,76.47443251009099,76.72509727906436,76.97560201119632,77.2262159131933,77.4769098830875,77.72764433617704,77.97836693609133,78.22897815005854,78.47957822307944,78.73032514913939,78.9808863431681,79.23157215607353,79.48225113097578,79.73296935902908,79.98353621317074,80.2342053130269,80.48484211415052,80.73550455411896,80.98607229907066,81.23673766502179,81.48741665203124,81.73809483507648,81.98883725819178,82.23949050204828,82.49000304401852,82.74066124204546,82.99131112219766,83.24192957719788,83.49259189306758,83.74333266215399,83.99399515707046,84.24468910112046,84.49527836218476,84.74600971210748,84.99673311901279,85.24740801518783,85.49810152803548,85.7486939909868,85.99940218403935,86.25013069808483,86.50080970604904,86.75153788016178,87.00223577604629,87.25289051118307,87.50342651712708,87.75413416302763,88.0047914320603,88.25542748207226,88.50608918908983,88.75683777011,89.00757530517876,89.25829728203826,89.50893447897397,89.75954093807377,90.0100530711934,90.26068007200956,90.51126004219986,90.7619387570303,91.01260334718972,91.26313490211032,91.51382208801806,91.76449432200752,92.01518468908034,92.2658517761156,92.51643175515346,92.76710919407196,93.01780977007002,93.26841468317434,93.51890341215767,93.76948597002774,94.01990218204446,94.2703411411494,94.52091198111884,94.77146891015582,95.02203405718319,95.27252459200099,95.52309876610525,95.77370076207444,96.02435920503922,96.27496572816744,96.525460987119,96.77591766603291,97.02650252403691,97.27714796410874,97.5277881580405,97.77840767102316,98.02893212204799,98.27952159917913,98.5299943741411,98.78066558018327,99.03134950809181,99.28202378400601,99.53267237311229,99.78325180197135,100.03391342610121,100.28442319412716,100.53493027505465,100.78559500700794,101.03624849906191,101.28671830217354,101.53725288202986,101.78781553311273,102.03840662818402,102.28892877115868,102.53946371516213,102.79016497312114,103.04086802410893,103.29156383499503,103.54228829406202,103.79297080310062,104.04368120897561,104.29434084915556,104.54496950819157,104.79559966409579,105.04621691303328,105.29692753613926,105.547571772011,105.79810472414829,106.04875921201892,106.2993699000217,106.54996879515238,106.80071429302916,107.05137674510479,107.30206855013967,107.55272844317369,107.80343156401068,108.05400121514685,108.30463717505336,108.55513395112939,108.80577102815732,109.05635961098596,109.306924614124,109.55741000315174,109.80794666009024,110.05851806816645,110.30906062107533,110.55958675104193,110.81024279701523,111.06084151216783,111.31129599618725,111.56186757213436,111.81252849008888,112.06318582012318,112.31377556920052,112.5644427430816,112.81515946309082,113.06585757713765,113.31656303512864,113.56721873907372,113.81788472714834,114.06852751015685,114.31916680908762,114.56978856399655,114.82043673703447,115.07104802597314,115.32170687103644,115.57239945512265,115.82307234010659,116.0737618720159,116.32446594699286,116.57506290613674,116.82571696210653,117.0762743181549,117.32693691505119,117.57761193509214,117.82827007514425,118.0789882009849,118.32956298603676,118.58016330818646,118.83078687102534,119.08138077915646,119.33195696398616,119.58267472614534,119.83330773608759,120.08388278307393,120.33441662904806,120.58504436304793,120.8356400881894,121.0862237541005,121.33690097904764,121.58753567817621,121.83816910418682,122.08880571112968,122.33926896913908,122.58990254811943,122.84055977500975,123.09115270897746,123.3417750261724,123.59242444508709,123.84314463916235,124.09376947907731,124.34433696419,124.59501335700043,124.84570081811398,125.09632496419363,125.34702329616994,125.59773892210796,125.84843420912512,126.09909879905172,126.34968488407321,126.60021906206384,126.85067823901772,127.1013600511942,127.35191476112232,127.6026131620165,127.8532318409998,128.10382461408153,128.35442267917097,128.60505943815224,128.85566670098342,129.10607656114735,129.35661890916526,129.6070867050439,129.85770740709268,130.10839609103277,130.35907999798656,130.60964685701765,130.8603687910363,131.11104466603138,131.36169884214178,131.61243472597562,131.86312384414487,132.11370460805483,132.36434039101005,132.61507421801798,132.86577247618698,133.11641254019924,133.36707837413996,133.61776782711968,133.86845269799232,134.1190685890615,134.36978486017324,134.620539088035,134.87125403317623,135.121901123086,135.3726046651136,135.62326498609036,135.87393509200774,136.1246346370317,136.37530471105129,136.62597891013138,136.87657849909738,137.12728680600412,137.3780011869967,137.62867192109115,137.87935767299496,138.13006862206385,138.38077212916687,138.63142624218017,138.88197359605692,139.1325052890461,139.38318077102304,139.63383987010457,139.88450210611336,140.13520360016264,140.3857344260905,140.6364330430515,140.88702039816417,141.13766679400578,141.38834995008074,141.63903269707225,141.88962667412125,142.14033026411198,142.3909840991255,142.64168416406028,142.8923046111595,143.1429577250965,143.39365149103105,143.6443088511005,143.89497818099335,144.14565130299889,144.3963033091277,144.64702054997906,144.89771024603397,145.14839079417288,145.3989799960982,145.64967772597447,145.90038541913964,146.15106843900867,146.40173305710778,146.65240737819113,146.9031108240597,147.153700316092,147.40432843216695,147.65503338398412,147.90566605399363,148.156364295166,148.40692213899456,148.65757599519566,148.90828744298778,149.1590434210375,149.4095766050741,149.66017450205982,149.91082829306833,150.16127047897317,150.4117602701299,150.6622109171003,150.9127808981575,151.1633286261931,151.41401926917024,151.66472038906068,151.91532581602223,152.166049889056,152.41670842003077,152.66742449998856,152.91813902999274,153.16884103999473,153.41947416518815,153.67022693506442,153.92085882998072,154.17158284317702,154.4222078451421,154.67278888914734,154.92349231918342,155.17421816498972,155.42492066603154,155.67554905614816,155.92620208207518,156.1768703002017,156.42749299807474,156.67818376701325,156.92890309216455,157.1794397791382,157.43011987605132,157.68073750799522,157.93130457913503,158.18199409218505,158.4325371379964,158.6832042541355,158.9339285590686,159.18454458005726,159.43521329201758,159.6859266089741,159.9365353640169,160.1870871190913,160.43756520515308,160.68811870203353,160.93869932903908,161.18928002309985,161.43992643197998,161.69058269704692,161.94122500997037,162.1918503951747,162.44248251314275,162.6930676170159,162.94370643701404,163.1943724839948,163.44502090313472,163.6956270460505,163.9462699831929,164.19686722615734,164.44750009197742,164.69815461803228,164.94884297205135,165.19942021206953,165.45006966008805,165.70078347809613,165.95146788004786,166.20211655204184,166.45270848297514,166.70341919898055,166.95404808712192,167.20470889098942,167.4554004170932,167.7061287839897,167.9568113090936,168.20742461713962,168.4580260461662,168.70875742519274,168.95941257919185,169.20996771217324,169.4605233920738,169.7112294251565,169.96184189710766,170.21246168506332,170.46292358706705,170.71359956008382,170.96412461111322,171.21471198112704,171.4652698400896,171.71589320106432,171.96646200702526,172.21714871702716,172.4677928360179,172.7184202200733,172.9689530651085,173.21942170406692,173.4699477381073,173.7206421350129,173.9712970131077,174.22202943102457,174.47273369203322,174.72346273506992,174.97418545302935,175.22491467604414,175.4756166911684,175.72623462416232,175.97681727004237,176.22753540007398,176.478271498112,176.73591621313244,176.9866530210711,177.2372541751247,177.48798455414362,177.73876932100393,177.98951135599054,178.24017011001706,178.4907902230043,178.74153343518265,178.99209328810684,179.24283766001463,179.49337989510968,179.74405892100185,179.99478895915672,180.2454480540473,180.49610645417124,180.746935244184,180.99771631206386,181.24847913905978,181.4992138601374,181.7500535901636,182.00085439207032,182.25158019317314,182.50217368919402,182.75286320620216,183.00355414114892,183.25426982319914,183.505003164988,183.7557706600055,184.00643243920058,184.25710736308247,184.50781950098462,184.7585032461211,185.0092124589719,185.25975135015324,185.51026769401506,185.7608759130817,186.01154282409698,186.26228625304066,186.5129778960254,186.76373132597655,187.0144303701818,187.2651526001282,187.51587169617414,187.76663593598641,188.01736374315806,188.26814540219493,188.5189714920707,188.7697750311345,189.02035105018876,189.27105253515765,189.52175303315744,189.77246524812654,190.02317940513603,190.27386206015944,190.5243759190198,190.77515778318048,191.02589805610478,191.27670552418567],"y":[0.0,52.7,79.8,139.6,91.8,59.8,55.8,59.8,59.9,59.9,55.9,55.9,51.9,67.8,67.8,55.8,87.8,87.8,75.8,55.8,55.9,59.8,63.8,51.8,55.8,51.9,83.8,59.9,55.9,87.9,71.8,55.9,55.9,47.9,43.9,47.9,63.9,59.9,71.8,79.8,59.8,83.8,63.8,67.8,59.9,59.9,55.9,59.8,47.9,55.8,75.8,63.8,75.8,83.8,79.8,67.8,59.8,59.9,63.8,51.9,59.8,63.8,43.9,59.8,79.8,59.8,59.9,51.9,55.8,55.9,47.9,59.8,55.9,55.9,63.9,59.9,59.9,67.8,83.9,63.8,75.9,55.9,63.8,55.9,63.8,59.8,55.8,71.8,71.8,67.8,83.8,91.8,59.8,59.8,39.9,63.9,135.6,8.0,175.5,83.8,498.9,151.6,135.6,43.9,67.8,394.9,63.8,59.9,323.1,63.8,63.9,63.8,75.8,55.9,63.9,51.9,59.9,51.9,55.8,67.8,55.9,67.8,51.9,59.8,91.7,59.8,59.9,47.9,51.9,63.8,59.9,55.9,59.8,75.8,67.8,51.9,87.8,59.9,59.9,63.9,59.8,51.9,51.8,55.9,55.8,55.8,87.8,67.8,71.8,71.8,47.9,59.8,47.9,59.8,55.9,63.8,51.9,63.8,51.9,51.8,83.8,79.8,59.8,55.8,55.9,55.9,59.9,59.9,51.9,55.9,43.9,63.8,63.8,71.8,55.9,63.8,43.9,63.8,55.9,55.9,51.9,67.8,59.8,59.8,55.9,83.8,83.8,63.8,55.8,59.8,51.9,55.9,59.9,67.9,47.9,59.8,67.8,79.8,83.8,39.9,335.3,83.8,83.8,383.1,139.7,59.9,55.9,59.8,470.7,55.9,195.6,67.8,47.9,71.8,75.8,55.9,55.9,51.9,63.9,67.8,63.8,55.9,55.9,63.9,59.9,75.8,59.9,71.9,259.5,175.6,163.6,67.8,51.8,47.9,59.8,39.9,31.9,55.8,47.9,59.8,51.9,55.8,55.9,55.8,55.9,55.8,39.9,67.8,47.9,43.9,39.9,51.9,47.9,51.9,67.8,55.8,39.9,51.9,51.9,55.9,51.9,47.9,59.9,51.9,47.9,51.9,47.9,43.9,55.9,43.9,47.9,59.9,51.9,51.9,51.9,59.8,51.9,39.9,43.9,71.8,55.8,55.8,39.9,51.9,59.9,39.9,55.9,51.9,47.9,55.9,47.9,67.8,55.9,51.9,47.9,59.8,39.9,51.8,55.8,47.9,55.9,43.9,43.9,63.8,59.8,55.9,55.9,59.9,51.9,51.8,51.9,51.8,47.9,51.9,47.9,47.9,43.9,51.9,47.9,55.9,43.9,47.9,63.8,47.9,63.8,55.8,43.9,55.8,55.9,47.9,47.9,51.9,63.9,43.9,55.8,51.9,55.8,43.9,39.9,67.8,51.9,63.8,31.9,47.9,43.9,35.9,43.9,39.9,47.9,43.9,55.8,47.9,63.8,47.9,47.9,39.9,31.9,51.9,39.9,59.9,55.9,35.9,47.9,51.9,67.9,43.9,43.9,47.9,55.9,59.9,55.9,39.9,43.9,47.9,51.9,51.9,59.9,47.9,47.9,63.9,47.9,87.8,0.0,367.0,87.8,75.8,355.4,163.6,43.9,255.3,59.9,263.5,215.5,59.9,71.8,51.9,67.8,87.8,83.8,63.8,47.9,55.9,55.9,67.8,59.9,43.9,79.8,67.8,67.9,63.9,55.8,67.8,63.8,55.8,55.9,63.8,51.9,59.8,55.9,87.8,59.8,75.8,71.9,59.8,63.8,59.8,55.8,47.9,63.8,55.8,55.8,75.8,63.8,63.9,71.8,55.9,63.9,67.9,43.9,71.8,59.9,55.9,55.9,59.9,71.9,63.9,79.8,59.8,75.8,55.9,55.8,51.9,55.8,67.8,63.8,51.9,79.8,51.9,87.8,71.8,55.8,63.8,59.8,59.8,47.9,59.9,55.9,63.9,71.8,59.8,67.8,75.8,71.8,55.9,55.9,59.9,59.9,55.8,55.9,55.9,75.8,83.8,167.6,119.7,59.8,67.8,474.8,51.9,43.9,291.3,235.4,59.9,47.9,271.3,63.8,51.9,47.9,59.8,51.9,63.9,55.8,55.8,43.9,55.9,39.9,51.9,39.9,55.8,59.9,43.9,67.8,47.9,51.9,47.9,47.9,43.9,51.9,59.9,47.9,55.8,51.9,43.9,59.8,55.8,47.9,51.8,55.8,55.9,51.9,51.9,55.8,55.9,51.9,47.9,51.9,59.9,43.9,47.9,47.9,39.9,51.9,51.9,51.9,55.8,51.9,55.9,43.9,51.9,47.9,47.9,35.9,43.9,47.9,47.9,59.9,55.9,47.9,55.9,55.9,55.8,55.9,51.9,43.9,35.9,39.9,51.9,39.9,59.8,59.8,55.8,63.8,59.8,55.8,59.8,47.9,39.9,59.8,43.9,43.9,59.8,55.9,43.9,59.8,47.9,67.8,59.8,39.9,47.9,51.9,43.9,39.9,35.9,55.9,51.9,47.9,55.8,47.9,43.9,39.9,43.9,35.9,35.9,55.9,39.9,55.8,47.9,47.9,43.9,43.9,59.8,47.9,47.9,47.9,55.8,59.8,43.9,39.9,55.9,43.9,55.8,59.8,59.9,51.9,51.9,51.9,59.8,51.8,47.9,59.8,55.9,55.9,51.9,67.8,43.9,59.8,59.9,55.8,43.9,79.8,39.9,267.5,191.6,47.9,67.8,398.9,39.9,71.8,43.9,470.8,51.9,243.4,71.8,75.8,83.8,91.8,79.8,55.9,55.9,63.8,55.9,59.8,59.8,59.8,59.8,75.8,67.8,83.8,55.9,67.8,55.8,59.8,71.8,43.9,55.8,71.8,63.9,55.9,75.8,79.8,83.8,71.9,51.9,59.9,59.9,55.9,71.8,55.9,63.8,71.8,67.8,83.8,79.9,67.8,79.8,63.8,59.8,67.8,55.8,63.8,55.8,59.8,55.9,75.8,67.8,62.2,87.6,67.8,55.9,59.8,55.8,55.8,55.9,59.8,63.8,63.9,63.8,71.8,55.9,67.8,55.9,63.8,63.8,55.8,59.8,59.8,51.8,63.8,75.8,75.8,59.8,87.8,131.6,115.6,83.7,79.8,462.8,135.6,47.9,59.8,395.2,51.9,51.9,331.1,71.8,51.9,75.8,87.7,59.8,55.8,47.9,59.8,47.9,59.8,59.8,55.9,67.8,63.8,59.8,51.9,67.8,43.9,0.0,163.5,0.0]},"selected":{"id":"4086"},"selection_policy":{"id":"4085"}},"id":"4062","type":"ColumnDataSource"},{"attributes":{"line_color":"#365A8C","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4139","type":"Line"},{"attributes":{"line_color":"#9DD93A","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4163","type":"Line"},{"attributes":{},"id":"4011","type":"SaveTool"},{"attributes":{},"id":"4094","type":"DataRange1d"},{"attributes":{"line_alpha":0.1,"line_color":"#440154","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"4064","type":"Line"},{"attributes":{"source":{"id":"4131"}},"id":"4136","type":"CDSView"},{"attributes":{"data":{"label":["mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])","mean_agg([_, _, _, ...])"],"x":[0,25.22383856307715,25.22425462398678,27.043550504138693,27.04414493893273,50.895071784965694,50.89567858004011,52.47448578896001,52.474888226017356,57.09840551903471,57.098879415076226,57.580994121031836,57.58139714994468,96.64278941904195,96.64329872909002,98.25636289012618,98.25681181810796,98.27799836406484,98.27904073009267,98.27929924195632,121.7721331671346,121.77273907698691,123.40214716596529,123.4026851109229,161.2260069779586,161.22651297599077,162.84888152801432,162.84928925614804,184.33371073612943,184.33440852095373,185.9411923729349,185.94157809996977,190.8878335680347,190.88815765897743,191.36798644415103,191.36834493395872,191.37053400999866,191.37184358597733,191.3719411259517,191.37350871507078,191.37385589908808,191.38140523596667,191.38171069696546],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0,0,0,0]},"selected":{"id":"4179"},"selection_policy":{"id":"4178"}},"id":"4137","type":"ColumnDataSource"},{"attributes":{"source":{"id":"4161"}},"id":"4166","type":"CDSView"},{"attributes":{"callback":null,"point_policy":"follow_mouse","tooltips":"\n    &lt;div&gt;\n        &lt;span style=\"font-size: 14px; font-weight: bold;\"&gt;Key:&lt;/span&gt;&amp;nbsp;\n        &lt;span style=\"font-size: 10px; font-family: Monaco, monospace;\"&gt;@key&lt;/span&gt;\n    &lt;/div&gt;\n    &lt;div&gt;\n        &lt;span style=\"font-size: 14px; font-weight: bold;\"&gt;Task:&lt;/span&gt;&amp;nbsp;\n        &lt;span style=\"font-size: 10px; font-family: Monaco, monospace;\"&gt;@function&lt;/span&gt;\n    &lt;/div&gt;\n    "},"id":"4010","type":"HoverTool"},{"attributes":{"line_alpha":0.1,"line_color":"#FDE724","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4134","type":"Line"},{"attributes":{"line_alpha":0.1,"line_color":"#9DD93A","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4164","type":"Line"},{"attributes":{},"id":"4168","type":"BasicTickFormatter"},{"attributes":{},"id":"4001","type":"CategoricalScale"},{"attributes":{"data_source":{"id":"4131"},"glyph":{"id":"4133"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4134"},"selection_glyph":null,"view":{"id":"4136"}},"id":"4135","type":"GlyphRenderer"},{"attributes":{"data_source":{"id":"4161"},"glyph":{"id":"4163"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4164"},"selection_glyph":null,"view":{"id":"4166"}},"id":"4165","type":"GlyphRenderer"},{"attributes":{},"id":"4098","type":"LinearScale"},{"attributes":{"data":{"label":["subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)","subgraph_callable(_, _)"],"x":[0,25.22383856307715,25.22425462398678,27.043550504138693,27.04414493893273,50.895071784965694,50.89567858004011,52.47448578896001,52.474888226017356,57.09840551903471,57.098879415076226,57.580994121031836,57.58139714994468,96.64278941904195,96.64329872909002,98.25636289012618,98.25681181810796,98.27799836406484,98.27904073009267,98.27929924195632,121.7721331671346,121.77273907698691,123.40214716596529,123.4026851109229,161.2260069779586,161.22651297599077,162.84888152801432,162.84928925614804,184.33371073612943,184.33440852095373,185.9411923729349,185.94157809996977,190.8878335680347,190.88815765897743,191.36798644415103,191.36834493395872,191.37053400999866,191.37184358597733,191.3719411259517,191.37350871507078,191.37385589908808,191.38140523596667,191.38171069696546],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0]},"selected":{"id":"4187"},"selection_policy":{"id":"4186"}},"id":"4161","type":"ColumnDataSource"},{"attributes":{},"id":"4012","type":"ResetTool"},{"attributes":{"axis_label":"Time (s)","formatter":{"id":"4168"},"ticker":{"id":"4101"}},"id":"4100","type":"LinearAxis"},{"attributes":{},"id":"4170","type":"BasicTickFormatter"},{"attributes":{},"id":"4105","type":"BasicTicker"},{"attributes":{},"id":"4172","type":"UnionRenderers"},{"attributes":{"dimensions":"width"},"id":"4013","type":"WheelZoomTool"},{"attributes":{},"id":"4101","type":"BasicTicker"},{"attributes":{},"id":"4180","type":"UnionRenderers"},{"attributes":{},"id":"4173","type":"Selection"},{"attributes":{},"id":"4043","type":"LinearScale"},{"attributes":{"axis":{"id":"4100"},"ticker":null},"id":"4103","type":"Grid"},{"attributes":{"dimensions":"width"},"id":"4014","type":"PanTool"},{"attributes":{"line_color":"#49C16D","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4145","type":"Line"},{"attributes":{},"id":"4174","type":"UnionRenderers"},{"attributes":{"axis":{"id":"4049"},"dimension":1,"ticker":null},"id":"4052","type":"Grid"},{"attributes":{"axis":{"id":"4104"},"dimension":1,"ticker":null},"id":"4107","type":"Grid"},{"attributes":{"source":{"id":"4137"}},"id":"4142","type":"CDSView"},{"attributes":{"end":498.9},"id":"4039","type":"Range1d"},{"attributes":{"axis_label":"Cache Size (count)","formatter":{"id":"4170"},"ticker":{"id":"4105"}},"id":"4104","type":"LinearAxis"},{"attributes":{"data":{"label":["subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)","subgraph_callable(_)"],"x":[0,25.22383856307715,25.22425462398678,27.043550504138693,27.04414493893273,50.895071784965694,50.89567858004011,52.47448578896001,52.474888226017356,57.09840551903471,57.098879415076226,57.580994121031836,57.58139714994468,96.64278941904195,96.64329872909002,98.25636289012618,98.25681181810796,98.27799836406484,98.27904073009267,98.27929924195632,121.7721331671346,121.77273907698691,123.40214716596529,123.4026851109229,161.2260069779586,161.22651297599077,162.84888152801432,162.84928925614804,184.33371073612943,184.33440852095373,185.9411923729349,185.94157809996977,190.8878335680347,190.88815765897743,191.36798644415103,191.36834493395872,191.37053400999866,191.37184358597733,191.3719411259517,191.37350871507078,191.37385589908808,191.38140523596667,191.38171069696546],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,3,4,2,0,0,0]},"selected":{"id":"4181"},"selection_policy":{"id":"4180"}},"id":"4143","type":"ColumnDataSource"},{"attributes":{"line_alpha":0.1,"line_color":"#365A8C","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4140","type":"Line"},{"attributes":{"axis":{"id":"4045"},"ticker":null},"id":"4048","type":"Grid"},{"attributes":{"line_color":"#46317E","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4121","type":"Line"},{"attributes":{},"id":"4175","type":"Selection"},{"attributes":{"data_source":{"id":"4137"},"glyph":{"id":"4139"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4140"},"selection_glyph":null,"view":{"id":"4142"}},"id":"4141","type":"GlyphRenderer"},{"attributes":{"axis_label":"Worker ID","axis_line_color":null,"formatter":{"id":"4030"},"major_tick_line_color":null,"ticker":{"id":"4008"}},"id":"4007","type":"CategoricalAxis"},{"attributes":{},"id":"4176","type":"UnionRenderers"},{"attributes":{"axis":{"id":"4007"},"dimension":1,"grid_line_color":null,"ticker":null},"id":"4009","type":"Grid"},{"attributes":{"line_alpha":0.1,"line_color":"#46317E","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4122","type":"Line"},{"attributes":{},"id":"4179","type":"Selection"},{"attributes":{"data":{"label":["_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_","_"],"x":[0,25.22383856307715,25.22425462398678,27.043550504138693,27.04414493893273,50.895071784965694,50.89567858004011,52.47448578896001,52.474888226017356,57.09840551903471,57.098879415076226,57.580994121031836,57.58139714994468,96.64278941904195,96.64329872909002,98.25636289012618,98.25681181810796,98.27799836406484,98.27904073009267,98.27929924195632,121.7721331671346,121.77273907698691,123.40214716596529,123.4026851109229,161.2260069779586,161.22651297599077,162.84888152801432,162.84928925614804,184.33371073612943,184.33440852095373,185.9411923729349,185.94157809996977,190.8878335680347,190.88815765897743,191.36798644415103,191.36834493395872,191.37053400999866,191.37184358597733,191.3719411259517,191.37350871507078,191.37385589908808,191.38140523596667,191.38171069696546],"y":[0,0,1,0,1,1,2,1,2,2,3,2,3,3,4,3,4,0,0,0,0,1,0,1,1,2,1,2,2,3,2,3,3,4,3,4,0,0,0,0,0,0,0]},"selected":{"id":"4175"},"selection_policy":{"id":"4174"}},"id":"4125","type":"ColumnDataSource"},{"attributes":{"callback":null,"tooltips":"\n    &lt;div&gt;\n        &lt;span style=\"font-size: 14px; font-weight: bold;\"&gt;Task:&lt;/span&gt;&amp;nbsp;\n        &lt;span style=\"font-size: 10px; font-family: Monaco, monospace;\"&gt;@label&lt;/span&gt;\n    &lt;/div&gt;\n    "},"id":"4108","type":"HoverTool"},{"attributes":{},"id":"4008","type":"CategoricalTicker"},{"attributes":{},"id":"4085","type":"UnionRenderers"},{"attributes":{},"id":"4178","type":"UnionRenderers"},{"attributes":{},"id":"4109","type":"SaveTool"},{"attributes":{"source":{"id":"4143"}},"id":"4148","type":"CDSView"},{"attributes":{},"id":"4110","type":"ResetTool"},{"attributes":{"line_alpha":0.1,"line_color":"#49C16D","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4146","type":"Line"},{"attributes":{"data_source":{"id":"4143"},"glyph":{"id":"4145"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4146"},"selection_glyph":null,"view":{"id":"4148"}},"id":"4147","type":"GlyphRenderer"},{"attributes":{},"id":"4111","type":"WheelZoomTool"},{"attributes":{"dimensions":"width"},"id":"4112","type":"PanTool"},{"attributes":{"data":{"label":["nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])","nanmax([_, _])"],"x":[0,25.22383856307715,25.22425462398678,27.043550504138693,27.04414493893273,50.895071784965694,50.89567858004011,52.47448578896001,52.474888226017356,57.09840551903471,57.098879415076226,57.580994121031836,57.58139714994468,96.64278941904195,96.64329872909002,98.25636289012618,98.25681181810796,98.27799836406484,98.27904073009267,98.27929924195632,121.7721331671346,121.77273907698691,123.40214716596529,123.4026851109229,161.2260069779586,161.22651297599077,162.84888152801432,162.84928925614804,184.33371073612943,184.33440852095373,185.9411923729349,185.94157809996977,190.8878335680347,190.88815765897743,191.36798644415103,191.36834493395872,191.37053400999866,191.37184358597733,191.3719411259517,191.37350871507078,191.37385589908808,191.38140523596667,191.38171069696546],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,0,0]},"selected":{"id":"4183"},"selection_policy":{"id":"4182"}},"id":"4149","type":"ColumnDataSource"},{"attributes":{"line_color":"#277E8E","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4151","type":"Line"},{"attributes":{},"id":"4205","type":"UnionRenderers"},{"attributes":{"data_source":{"id":"4021"},"glyph":{"id":"4023"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4024"},"selection_glyph":null,"view":{"id":"4026"}},"id":"4025","type":"GlyphRenderer"},{"attributes":{"source":{"id":"4149"}},"id":"4154","type":"CDSView"},{"attributes":{},"id":"4177","type":"Selection"},{"attributes":{"line_color":"#440154","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"4063","type":"Line"},{"attributes":{"line_alpha":0.1,"line_color":"#277E8E","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4152","type":"Line"},{"attributes":{},"id":"3999","type":"LinearScale"},{"attributes":{"line_color":"#440154","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4127","type":"Line"},{"attributes":{"data_source":{"id":"4149"},"glyph":{"id":"4151"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4152"},"selection_glyph":null,"view":{"id":"4154"}},"id":"4153","type":"GlyphRenderer"},{"attributes":{"source":{"id":"4119"}},"id":"4124","type":"CDSView"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"4010"},{"id":"4011"},{"id":"4012"},{"id":"4013"},{"id":"4014"}]},"id":"4015","type":"Toolbar"},{"attributes":{"data_source":{"id":"4119"},"glyph":{"id":"4121"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4122"},"selection_glyph":null,"view":{"id":"4124"}},"id":"4123","type":"GlyphRenderer"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"field":"color"},"height":{"units":"data","value":1},"line_alpha":{"value":0.1},"line_color":{"value":"gray"},"width":{"field":"width","units":"data"},"x":{"field":"x"},"y":{"field":"y"}},"id":"4024","type":"Rect"},{"attributes":{"data":{"label":["nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])","nanmin([_, _])"],"x":[0,25.22383856307715,25.22425462398678,27.043550504138693,27.04414493893273,50.895071784965694,50.89567858004011,52.47448578896001,52.474888226017356,57.09840551903471,57.098879415076226,57.580994121031836,57.58139714994468,96.64278941904195,96.64329872909002,98.25636289012618,98.25681181810796,98.27799836406484,98.27904073009267,98.27929924195632,121.7721331671346,121.77273907698691,123.40214716596529,123.4026851109229,161.2260069779586,161.22651297599077,162.84888152801432,162.84928925614804,184.33371073612943,184.33440852095373,185.9411923729349,185.94157809996977,190.8878335680347,190.88815765897743,191.36798644415103,191.36834493395872,191.37053400999866,191.37184358597733,191.3719411259517,191.37350871507078,191.37385589908808,191.38140523596667,191.38171069696546],"y":[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0]},"selected":{"id":"4185"},"selection_policy":{"id":"4184"}},"id":"4155","type":"ColumnDataSource"},{"attributes":{"factors":["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15","16","17","18","19","20","21","22","23","24","25","26","27","28","29","30","31","32"]},"id":"3997","type":"FactorRange"},{"attributes":{"line_color":"#1EA087","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4157","type":"Line"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"4053"},{"id":"4054"},{"id":"4055"},{"id":"4056"}]},"id":"4057","type":"Toolbar"},{"attributes":{"axis_label":null,"formatter":{"id":"4068"},"ticker":{"id":"4046"}},"id":"4045","type":"LinearAxis"},{"attributes":{},"id":"4187","type":"Selection"},{"attributes":{"line_alpha":0.1,"line_color":"#440154","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4128","type":"Line"},{"attributes":{},"id":"4046","type":"BasicTicker"},{"attributes":{"source":{"id":"4155"}},"id":"4160","type":"CDSView"},{"attributes":{},"id":"4041","type":"LinearScale"},{"attributes":{"line_alpha":0.1,"line_color":"#1EA087","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"4158","type":"Line"},{"attributes":{"data_source":{"id":"4125"},"glyph":{"id":"4127"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4128"},"selection_glyph":null,"view":{"id":"4130"}},"id":"4129","type":"GlyphRenderer"},{"attributes":{"data_source":{"id":"4155"},"glyph":{"id":"4157"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"4158"},"selection_glyph":null,"view":{"id":"4160"}},"id":"4159","type":"GlyphRenderer"},{"attributes":{"data":{"label":["subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))","subgraph_callable(broadcast_to(_, *))"],"x":[0,25.22383856307715,25.22425462398678,27.043550504138693,27.04414493893273,50.895071784965694,50.89567858004011,52.47448578896001,52.474888226017356,57.09840551903471,57.098879415076226,57.580994121031836,57.58139714994468,96.64278941904195,96.64329872909002,98.25636289012618,98.25681181810796,98.27799836406484,98.27904073009267,98.27929924195632,121.7721331671346,121.77273907698691,123.40214716596529,123.4026851109229,161.2260069779586,161.22651297599077,162.84888152801432,162.84928925614804,184.33371073612943,184.33440852095373,185.9411923729349,185.94157809996977,190.8878335680347,190.88815765897743,191.36798644415103,191.36834493395872,191.37053400999866,191.37184358597733,191.3719411259517,191.37350871507078,191.37385589908808,191.38140523596667,191.38171069696546],"y":[0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0]},"selected":{"id":"4177"},"selection_policy":{"id":"4176"}},"id":"4131","type":"ColumnDataSource"},{"attributes":{"axis_label":null,"axis_line_color":null,"formatter":{"id":"4028"},"major_tick_line_color":null,"ticker":{"id":"4004"}},"id":"4003","type":"LinearAxis"},{"attributes":{"source":{"id":"4021"}},"id":"4026","type":"CDSView"}],"root_ids":["4233"]},"title":"Bokeh Application","version":"2.0.2"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('5035').textContent;
+                  var render_items = [{"docid":"35433db2-4cd6-431a-9f82-d5a04da86d04","root_ids":["4233"],"roots":{"4233":"69a276ce-839a-4369-81da-e7e2ec7f888f"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>
