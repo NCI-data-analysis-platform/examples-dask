@@ -4,12 +4,11 @@ This repo stores dask examples that were developed for NCI’s training purposes
 
 Notes:
 
-1. Those examples are in dev mode, hence might not be perfect such as comments, structure and design, etc. Feedback is welcome to help improve the quality.
+1. Feedback is welcome to help improve the quality. Please provide feedback via git pull request or issues.
 2. More examples may be added from time to time. Therefore, you might see something different when cloning the repo each time.
-3. A few packages will need to installed: graphviz, holoviews, datashader, pyarrow, bottleneck etc.
-4. Typos might not be checked throughout.
-5. Some examples (especially the toy problem ones) are copied from dask tutorial git repo, which are referenced inside of the examples.
-6. Creating cluster like the cell below is not necessary when running some of the examples. It was designed to demonstrate distributed calculation through the dask dashboard when running those examples in the Pangeo environment on Gadi. You can decide whether to use it according to your own interests.
+3. **Requirements:** A few packages will need to installed: graphviz, holoviews, datashader, pyarrow, bottleneck etc.
+4. Some examples (especially the toy problem ones) are copied from dask tutorial git repo, which are referenced inside of the examples.
+5. Creating a cluster like the cell below is not necessary when running some of the examples. It was designed to demonstrate distributed calculation through the dask dashboard when running those examples in the Pangeo environment on Gadi. You can decide whether to use it according to your own interests.
 
 ```
 From dask.distributed import Client,LocalCluster
@@ -19,7 +18,6 @@ print(client)
 
 | Example | datasets | description |
 | --- | --- | --- |
-| 1_11_basics | toy | Dask array, lazy loading and graph visualisation, progress bar, etc |
 | 1_12_chunks | CMIP6 – oi10 | Read in CMIP6 by giving a chunksize |
 | 1_13_delayed_toy | toy | Dask.delayed utility, apply it to a loop example to accelerate |
 | 1_14_delayed_pandas_paleoceanography | Paleo climate csv | Apply dask.delayed to paleoclimate records (in csv files)<br> **Note:** Running this example on local computer is fine, but not on HPC with csv files not found error. I found [a similar issue](https://stackoverflow.com/questions/50987030/file-not-found-error-in-dask-program-run-on-cluster) and it may explain why and work arounds are discussed. |
@@ -32,7 +30,7 @@ print(client)
 
 | Example | Description |
 | --- | --- |
-| Dask_01_basics.ipynb |  |
+| Dask_01_basics.ipynb | Dask provided tutorial: dask array, lazy loading and graph visualisation, progress bar, etc |
 | Dask_02_data_chunks_CMIP6.ipynb |  |
 | Dask_03_fundermentals_Delayed.ipynb |  |
 | Dask_04_delayed_pandas_palioceanography.ipynb |  |
