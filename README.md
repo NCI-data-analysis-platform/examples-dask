@@ -18,8 +18,6 @@ print(client)
 
 | Example | datasets | description |
 | --- | --- | --- |
-| 1_15_dataframes_weather station | rainfall csv | Read in BoM rainfall csv data as dask.dataframe, and loop over a number of csv files (as chunks) to demonstrate distributed graph calculation.<br> Read/Write to Parquet for a better performance |
-| 1_16_schedulars_weather station | rainfall csv | Apply Dask Schedulers (local thread, local processes, single thread, distributed schedulars) to the same workflow above. |
 | 1_17_Numpy_AGDC <br> **Note:** The first little session needs a large HDF5 file. Given the git limits on file size, I can not make it available, but I can make it available on gadi:/scratch/public/jbw900/data/ <br> the last line, save to hdf5 does not work. | Gridded precipitation – rr8 | Synthetic data to demonstrate Dask Array (similar to NumPy Array). Explain parallelism (by chunks) on array for better performance by applying to AGDC datasets. |
 | 1_18_DataArray_Xarray_CMIP6 <br>**Note:** Sometimes, I got killworker msg. | CMIP6 – fs38 | Dask.dataArray vs. Xarray.dataArray with the same standard xarray operations. |
 | 1_19_Xarray_Gridded_Percipitation | CMIP6 – fs38 | Analysis of Gridded Ensemble Precipitation Estimates using CMIP6 model output. Extract a time series of annual maximum precipitation events over a region |
@@ -31,8 +29,8 @@ print(client)
 | Dask_02_data_chunks_CMIP6.ipynb | Read in CMIP6 data and explore chunksize |
 | Dask_03_fundamentals_Delayed.ipynb | Dask provided: Dask.delayed utility, apply to a loop to accelerate |
 | Dask_04_delayed_pandas_paleoceanography.ipynb | Apply dask.delayed to paleoclimate records (in csv files)<br> **Note:** This example will only work for members of NCI project dk92 operating on the filesystem. Data needs to be made independently available. |
-| Dask_05_dataframes_ACTweather.ipynb |  |
-| Dask_06_schedulers_ACTweather.ipynb |  |
+| Dask_05_dataframes_ACTweather.ipynb | Read in BoM rainfall csv data as dask.dataframe, and loop over a number of csv files (as chunks) to demonstrate distributed graph calculation. Read/Write to Parquet to demonstrate better performance |
+| Dask_06_schedulers_ACTweather.ipynb | Apply Dask Schedulers (local threads, local processes, single thread, distributed schedulers) to the same workflow above. |
 | Dask_07_numpy_temperature.ipynb |  |
 | Dask_08_xarray_CMIP6.ipynb |  |
 | Dask_09_Xarray_precipitation.ipynb |  |
