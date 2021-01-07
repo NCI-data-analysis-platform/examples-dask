@@ -31,7 +31,7 @@ print(client)
 | Dask_11_diagnositc_tools.ipynb | Demonstration of ProgressBar and dask profilers |
 | Dask_12_intensive_calculation_eReefs.ipynb | Use dask to process a large dataset |
 | Dask_13_distributed_dataframes_geochem.ipynb | Use pandas-like dataframes to access geochemistry data and optimse data access. |
-| Dask_14_distributed_advanced.ipynb |  |
+| Dask_14_distributed_advanced.ipynb | Dask futures, discussion of GIL |
 | Dask_15_memory_compute_management.ipynb |  |
 | Dask_16_bag.ipynb |  |
 | Dask_17_machine_learning.ipynb |  |
@@ -43,4 +43,5 @@ profile.html
 task-stream.html
 % Can these files be cleaned up or moved to a subfolder?
 
-Data used in these examples is licenced under the Creative Commons CC-BY4.0 licence (CHECK??), further information available (???). The images used in the 'images' directory are sourced from ????? and used with permision (CHECK??)
+These materials are built on xarray, dask, and pangeo tutorials which are provided under the [Creative Commons CC-BY4.0 licence](https://github.com/pangeo-data/pangeo-tutorial/blob/agu2019/LICENSE).
+Data used in these examples is public data hosted at NCI, see individual exercises for links to metadata records for full licence information.
