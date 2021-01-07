@@ -18,7 +18,6 @@ print(client)
 
 | Example | datasets | description |
 | --- | --- | --- |
-| 1_19_Xarray_Gridded_Percipitation | CMIP6 – fs38 | Analysis of Gridded Ensemble Precipitation Estimates using CMIP6 model output. Extract a time series of annual maximum precipitation events over a region |
 | 1_20_ ocean model_analysis_visulisation | CMIP6 – oi10 – GFDL highresSST-future | Using Holoviews and Datashader to visualise data <br> **Known issue:** Datashader shows snapshot very slowly |
 
 | Example | Description |
@@ -31,7 +30,7 @@ print(client)
 | Dask_06_schedulers_ACTweather.ipynb | Apply Dask Schedulers (local threads, local processes, single thread, distributed schedulers) to the same workflow above. |
 | Dask_07_numpy_temperature.ipynb | Dask provided tutorial: Numpy and dask analogues. Example using Australian rainfall data. |
 | Dask_08_xarray_CMIP6.ipynb | Dask.dataArray vs. xarray.dataArray with the same standard xarray operations, persist data in memory. |
-| Dask_09_Xarray_precipitation.ipynb |  |
+| Dask_09_Xarray_precipitation.ipynb | Analysis of Gridded Ensemble Precipitation Estimates using CMIP6 model output. Extract a time series of annual maximum precipitation from an ensemlbe at a point. |
 | Dask_10_interactive_visualise_CMIP6.ipynb |  |
 | Dask_11_diagnositc_tools.ipynb |  |
 | Dask_12_intensive_calculation_eReefs.ipynb |  |
