@@ -30,7 +30,7 @@ print(client)
 | Dask_10_interactive_visualise_CMIP6.ipynb | Using Holoviews and Datashader to visualise data <br> **Known issue:** Datashader shows snapshot very slowly |
 | Dask_11_diagnositc_tools.ipynb | Demonstration of ProgressBar and dask profilers |
 | Dask_12_intensive_calculation_eReefs.ipynb | Use dask to process a large dataset |
-| Dask_13_distributed_dataframes_geochem.ipynb |  |
+| Dask_13_distributed_dataframes_geochem.ipynb | Use pandas-like dataframes to access geochemistry data and optimse data access. |
 | Dask_14_distributed_advanced.ipynb |  |
 | Dask_15_memory_compute_management.ipynb |  |
 | Dask_16_bag.ipynb |  |
