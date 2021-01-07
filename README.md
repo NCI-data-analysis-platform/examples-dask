@@ -16,10 +16,6 @@ client = Client(scheduler_file=’scheduler.json’)
 print(client)
 ```
 
-| Example | datasets | description |
-| --- | --- | --- |
-| 1_20_ ocean model_analysis_visulisation | CMIP6 – oi10 – GFDL highresSST-future | Using Holoviews and Datashader to visualise data <br> **Known issue:** Datashader shows snapshot very slowly |
-
 | Example | Description |
 | --- | --- |
 | Dask_01_basics.ipynb | Dask provided tutorial: dask array, lazy loading and graph visualisation, progress bar, etc |
@@ -31,7 +27,7 @@ print(client)
 | Dask_07_numpy_temperature.ipynb | Dask provided tutorial: Numpy and dask analogues. Example using Australian rainfall data. |
 | Dask_08_xarray_CMIP6.ipynb | Dask.dataArray vs. xarray.dataArray with the same standard xarray operations, persist data in memory. |
 | Dask_09_Xarray_precipitation.ipynb | Analysis of Gridded Ensemble Precipitation Estimates using CMIP6 model output. Extract a time series of annual maximum precipitation from an ensemlbe at a point. |
-| Dask_10_interactive_visualise_CMIP6.ipynb |  |
+| Dask_10_interactive_visualise_CMIP6.ipynb | Using Holoviews and Datashader to visualise data <br> **Known issue:** Datashader shows snapshot very slowly |
 | Dask_11_diagnositc_tools.ipynb |  |
 | Dask_12_intensive_calculation_eReefs.ipynb |  |
 | Dask_13_distributed_dataframes_geochem.ipynb |  |
