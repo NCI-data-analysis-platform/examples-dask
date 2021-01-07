@@ -29,7 +29,7 @@ print(client)
 | Dask_09_Xarray_precipitation.ipynb | Analysis of Gridded Ensemble Precipitation Estimates using CMIP6 model output. Extract a time series of annual maximum precipitation from an ensemlbe at a point. |
 | Dask_10_interactive_visualise_CMIP6.ipynb | Using Holoviews and Datashader to visualise data <br> **Known issue:** Datashader shows snapshot very slowly |
 | Dask_11_diagnositc_tools.ipynb | Demonstration of ProgressBar and dask profilers |
-| Dask_12_intensive_calculation_eReefs.ipynb |  |
+| Dask_12_intensive_calculation_eReefs.ipynb | Use dask to process a large dataset |
 | Dask_13_distributed_dataframes_geochem.ipynb |  |
 | Dask_14_distributed_advanced.ipynb |  |
 | Dask_15_memory_compute_management.ipynb |  |
