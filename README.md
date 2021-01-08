@@ -33,7 +33,7 @@ print(client)
 | Dask_13_distributed_dataframes_geochem.ipynb | Use pandas-like dataframes to access geochemistry data and optimse data access. |
 | Dask_14_distributed_advanced.ipynb | Dask futures, discussion of GIL |
 | Dask_15_memory_compute_management.ipynb | Dask resource management, overview of aspects of dask using various datasets |
-| Dask_16_bag.ipynb |  |
+| Dask_16_bag.ipynb | Dask bag demo |
 | Dask_17_machine_learning.ipynb |  |
 
 dask-profile.html
