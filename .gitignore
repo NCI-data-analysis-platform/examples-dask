@@ -7,3 +7,8 @@ mydask.png
 dataframe_graph.pdf
 graph.pdf
 scheduler.json
+dask-report.html
+profile.html
+task-stream.html
+dask-profile.html
+myfile.html
