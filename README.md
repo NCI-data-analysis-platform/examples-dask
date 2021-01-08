@@ -33,15 +33,8 @@ print(client)
 | Dask_13_distributed_dataframes_geochem.ipynb | Use pandas-like dataframes to access geochemistry data and optimse data access. |
 | Dask_14_distributed_advanced.ipynb | Dask futures, discussion of GIL |
 | Dask_15_memory_compute_management.ipynb | Dask resource management, overview of aspects of dask using various datasets |
-| Dask_16_bag.ipynb | Dask bag demo |
-| Dask_17_machine_learning.ipynb |  |
+| Dask_16_bag.ipynb | Dask bag demo with JSON representation of CMIP metadata |
+| Dask_17_machine_learning.ipynb | Dask can be used to scale up Machine Learning problems |
 
-dask-profile.html
-mydask.png
-myfile.html
-profile.html
-task-stream.html
-% Can these files be cleaned up or moved to a subfolder?
-
-These materials are built on xarray, dask, and pangeo tutorials which are provided under the [Creative Commons CC-BY4.0 licence](https://github.com/pangeo-data/pangeo-tutorial/blob/agu2019/LICENSE).
+These materials are built on xarray, dask, and pangeo tutorials which are provided under the [Creative Commons CC-BY4.0 licence](https://github.com/pangeo-data/pangeo-tutorial/blob/agu2019/LICENSE) and [CC-BY-SA 4.0 licence](https://github.com/dask/dask-examples/blob/master/LICENSE.txt).
 Data used in these examples is public data hosted at NCI, see individual exercises for links to metadata records for full licence information.
