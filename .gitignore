@@ -1,0 +1,14 @@
+**/.DS_Store
+.DS_Store
+.ipynb_checkpoints
+dask-worker-space
+.vscode
+mydask.png
+dataframe_graph.pdf
+graph.pdf
+scheduler.json
+dask-report.html
+profile.html
+task-stream.html
+dask-profile.html
+myfile.html
